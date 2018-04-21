@@ -12,22 +12,47 @@ func _ready():
 	# Initialization here
 	pass
 
+func deadzone_normalize(input, min_len=0.2, max_len=0.95):
+	var l = input.length()
+	if l > max_len:
+		return input.normalized()
+
+	if l < min_len:
+		return Vector2()
+
+	var sc = (l - min_len) / (max_len - min_len)
+	return input.normalized() * sc
+
 func _process(delta):
+	var have_joystick = false
 	var movement = Vector2(0,0)
 
-	if Input.is_action_pressed("ui_left"): 
+	var joy_movement = Vector2(Input.get_joy_axis(0, JOY_AXIS_0), Input.get_joy_axis(0, JOY_AXIS_1))
+
+	if joy_movement.length_squared() > 0:
+		joy_movement = deadzone_normalize(joy_movement)
+		if joy_movement.length_squared() > 0:
+			movement = joy_movement
+			have_joystick = true
+
+	if not have_joystick: 
+		if Input.is_action_pressed("ui_left"): 
+			movement.x -= 1
+
+		if Input.is_action_pressed("ui_right"): 
+			movement.x += 1
+
+		if Input.is_action_pressed("ui_up"): 
+			movement.y -= 1
+
+		if Input.is_action_pressed("ui_down"): 
+			movement.y += 1
+
+	if movement.x < 0:
 		$Sprite.flip_h = false
-		movement.x -= 1
 
-	if Input.is_action_pressed("ui_right"): 
+	if movement.x > 0:
 		$Sprite.flip_h = true
-		movement.x += 1
-
-	if Input.is_action_pressed("ui_up"): 
-		movement.y -= 1
-
-	if Input.is_action_pressed("ui_down"): 
-		movement.y += 1
 
 	if Input.is_action_just_pressed("ui_accept"):
 		shoot_puck()
