@@ -45,7 +45,7 @@ func _process(delta):
 			movement.x += 1
 
 		if Input.is_action_pressed("ui_up"): 
-			movement.y -= 165
+			movement.y -= 1
 
 		if Input.is_action_pressed("ui_down"): 
 			movement.y += 1
