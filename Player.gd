@@ -30,3 +30,14 @@ func _process(delta):
 		movement = movement.normalized() * SPEED
 
 	move_and_slide(movement)
+	check_for_hits()
+
+func check_for_hits():
+	for i in range(get_slide_count()):
+		var collision = get_slide_collision(i)
+		var object = collision.collider
+
+		if "Puck" in object.get_groups():
+			print("Hit puck")
+			object.push(collision.get_normal() * -20)
+
