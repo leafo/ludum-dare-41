@@ -3,19 +3,19 @@
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://images/sprite.png" type="Texture" id=2]
 [ext_resource path="res://Puck.gd" type="Script" id=3]
-[ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://images/puck.png" type="Texture" id=4]
 [ext_resource path="res://fonts/HelvetiPixel.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://images/bg.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 6.92885, 11.3057 )
+extents = Vector2( 9.54917, 3.49828 )
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=4]
 
 custom_solver_bias = 0.0
-radius = 31.2339
+extents = Vector2( 3.59009, 2.58511 )
 
 [sub_resource type="DynamicFont" id=3]
 
@@ -27,9 +27,15 @@ _sections_unfolded = [ "Extra Spacing", "Font", "Resource", "Settings" ]
 
 [node name="Main" type="Node" index="0"]
 
-[node name="Player" type="KinematicBody2D" parent="." index="0"]
+[node name="YSort" type="YSort" parent="." index="0"]
 
-position = Vector2( 50.8593, 51.3864 )
+position = Vector2( 49.4952, 58.7185 )
+sort_enabled = true
+
+[node name="Player" type="KinematicBody2D" parent="YSort" index="0"]
+
+editor/display_folded = true
+position = Vector2( 1.36412, -7.33215 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -39,7 +45,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Player" index="0"]
+[node name="Sprite" type="Sprite" parent="YSort/Player" index="0"]
 
 texture = ExtResource( 2 )
 hframes = 2
@@ -48,11 +54,12 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Player" index="1"]
 
+position = Vector2( -1.36412, 7.33215 )
 shape = SubResource( 1 )
 
-[node name="Camera" type="Camera2D" parent="Player" index="2"]
+[node name="Camera" type="Camera2D" parent="YSort/Player" index="2"]
 
 anchor_mode = 1
 rotating = false
@@ -78,12 +85,12 @@ editor_draw_limits = false
 editor_draw_drag_margin = false
 _sections_unfolded = [ "Smoothing" ]
 
-[node name="Puck" type="KinematicBody2D" parent="." index="1" groups=[
+[node name="Puck" type="KinematicBody2D" parent="YSort" index="1" groups=[
 "Puck",
 ]]
 
 editor/display_folded = true
-position = Vector2( 157.348, 55.5905 )
+position = Vector2( 107.853, -3.12803 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -93,15 +100,17 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Puck" index="0"]
+[node name="Sprite" type="Sprite" parent="YSort/Puck" index="0"]
 
 texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Puck" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Puck" index="1"]
 
-shape = SubResource( 2 )
+shape = SubResource( 4 )
+_sections_unfolded = [ "Transform" ]
 
-[node name="Label2" type="Label" parent="." index="2"]
+[node name="Label2" type="Label" parent="." index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -124,8 +133,9 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="Sprite" type="Sprite" parent="." index="3"]
+[node name="Background" type="Sprite" parent="." index="2"]
 
+position = Vector2( 0.255772, 3.23978 )
 z_index = -1
 texture = ExtResource( 6 )
 _sections_unfolded = [ "Z Index" ]
