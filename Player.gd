@@ -22,6 +22,10 @@ func _process(delta):
 	if Input.is_action_pressed("ui_down"): 
 		movement.y += 1
 
+	if Input.is_action_just_pressed("ui_accept"):
+		var puck = get_parent().get_node("Puck")
+		print("shoot", puck)
+
 	if movement.length_squared() != 0:
 		movement = movement.normalized() * SPEED
 
