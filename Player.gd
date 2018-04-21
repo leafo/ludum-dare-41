@@ -84,8 +84,8 @@ func shoot_puck():
 	var puck = get_parent().get_node("Puck")
 	var distance = position.distance_to(puck.position)
 	if distance < 30: 
-		puck.on_hit()
 		puck.push((puck.position - position).normalized() * 300)
+		puck.on_hit()
 
 func check_for_hits():
 	for i in range(get_slide_count()):

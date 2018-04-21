@@ -32,6 +32,8 @@ func push(direction):
 
 func on_hit(): 
 	$SoundHit.play()
+	if velocity.length() > 95:
+		$AnimationPlayer.play("HitHoriz")
 
 func check_for_hits():
 	for i in range(get_slide_count()):
@@ -39,8 +41,8 @@ func check_for_hits():
 		var object = collision.collider
 
 		if "PuckBounce" in object.get_groups():
-			on_hit()
 			velocity = (-velocity).reflect(collision.normal)
+			on_hit()
 
 			if "Target" in object.get_groups():
 				object.take_hit(collision, self)
