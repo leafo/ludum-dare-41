@@ -36,4 +36,5 @@ func check_for_hits():
 		var object = collision.collider
 
 		if "Rink" in object.get_groups():
+			$SoundHit.play()
 			velocity = (-velocity).reflect(collision.normal)

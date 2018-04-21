@@ -5,6 +5,8 @@ const FRICTION = 5
 const ACCELERATION = 10
 const EPSILON = 0.00001
 
+var skating = false
+
 var velocity = Vector2()
 
 func _ready():
@@ -43,7 +45,7 @@ func _process(delta):
 			movement.x += 1
 
 		if Input.is_action_pressed("ui_up"): 
-			movement.y -= 1
+			movement.y -= 165
 
 		if Input.is_action_pressed("ui_down"): 
 			movement.y += 1
@@ -60,9 +62,15 @@ func _process(delta):
 	if movement.length_squared() != 0:
 		movement = movement.normalized() * SPEED
 		velocity = velocity.linear_interpolate(movement, delta * ACCELERATION)
-	else:
-		var ls = velocity.length_squared() 
 
+		if not skating:
+			start_skating()
+	else:
+		if skating:
+			skating = false
+			$SkateSoundTimer.stop()
+
+		var ls = velocity.length_squared() 
 		if ls > 0:
 			if ls < EPSILON:
 				velocity = Vector2()
@@ -86,4 +94,16 @@ func check_for_hits():
 		if "Puck" in object.get_groups():
 			print("Hit puck")
 			object.push(collision.normal * -100)
+
+func start_skating():
+	print("start skating")
+	skating = true
+	$SkateSoundTimer.wait_time = 0.4
+	$SkateSoundTimer/Animation.play("StartSkating")
+	$SkateSoundTimer.start()
+
+func _on_SkateSoundTimer_timeout():
+	print("timer timed out......")
+	$SoundSkate.play()
+	$SkateSoundTimer.start()
 

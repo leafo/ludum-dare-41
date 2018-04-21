@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/skate.wav-a631acff23af3f68133093484395f386.sample"
+
+[deps]
+
+source_file="res://sounds/skate.wav"
+source_md5="343a713599de8c0ef24f0ce7d41a4bec"
+
+dest_files=[ "res://.import/skate.wav-a631acff23af3f68133093484395f386.sample" ]
+dest_md5="e0177a940cff1249fca383f6d7f0d68d"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

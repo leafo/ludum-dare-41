@@ -1,16 +1,52 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://images/sprite.png" type="Texture" id=2]
-[ext_resource path="res://Puck.gd" type="Script" id=3]
-[ext_resource path="res://images/puck.png" type="Texture" id=4]
-[ext_resource path="res://images/bg.png" type="Texture" id=5]
-[ext_resource path="res://fonts/HelvetiPixel.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://sounds/skate.wav" type="AudioStream" id=3]
+[ext_resource path="res://Puck.gd" type="Script" id=4]
+[ext_resource path="res://images/puck.png" type="Texture" id=5]
+[ext_resource path="res://sounds/puck_hit.wav" type="AudioStream" id=6]
+[ext_resource path="res://images/bg.png" type="Texture" id=7]
+[ext_resource path="res://fonts/HelvetiPixel.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://FPS.gd" type="Script" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 9.54917, 3.49828 )
+
+[sub_resource type="Animation" id=5]
+
+resource_name = "StartSkating"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:wait_time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.4, 0.2 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../SoundSkate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+} ]
+}
 
 [sub_resource type="RectangleShape2D" id=4]
 
@@ -22,19 +58,18 @@ extents = Vector2( 3.59009, 2.58511 )
 size = 16
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 6 )
+font_data = ExtResource( 8 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Resource", "Settings" ]
 
 [node name="Main" type="Node" index="0"]
 
-[node name="YSort" type="YSort" parent="." index="0"]
+[node name="Sprites" type="YSort" parent="." index="0"]
 
 position = Vector2( 49.4952, 58.7185 )
 sort_enabled = true
 
-[node name="Player" type="KinematicBody2D" parent="YSort" index="0"]
+[node name="Player" type="KinematicBody2D" parent="Sprites" index="0"]
 
-editor/display_folded = true
 position = Vector2( 1.36412, -7.33215 )
 input_pickable = false
 collision_layer = 1
@@ -45,7 +80,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="YSort/Player" index="0"]
+[node name="Sprite" type="Sprite" parent="Sprites/Player" index="0"]
 
 texture = ExtResource( 2 )
 hframes = 2
@@ -54,12 +89,12 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Player" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Player" index="1"]
 
 position = Vector2( -1.36412, 7.33215 )
 shape = SubResource( 1 )
 
-[node name="Camera" type="Camera2D" parent="YSort/Player" index="2"]
+[node name="Camera" type="Camera2D" parent="Sprites/Player" index="2"]
 
 anchor_mode = 1
 rotating = false
@@ -85,35 +120,74 @@ editor_draw_limits = false
 editor_draw_drag_margin = false
 _sections_unfolded = [ "Smoothing" ]
 
-[node name="Puck" type="KinematicBody2D" parent="YSort" index="1" groups=[
+[node name="SoundSkate" type="AudioStreamPlayer2D" parent="Sprites/Player" index="3"]
+
+stream = ExtResource( 3 )
+volume_db = -15.0
+autoplay = false
+max_distance = 500.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="SkateSoundTimer" type="Timer" parent="Sprites/Player" index="4"]
+
+process_mode = 1
+wait_time = 0.392507
+one_shot = true
+autostart = false
+
+[node name="Animation" type="AnimationPlayer" parent="Sprites/Player/SkateSoundTimer" index="0"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/StartSkating = SubResource( 5 )
+blend_times = [  ]
+_sections_unfolded = [ "Playback Options" ]
+
+[node name="Puck" type="KinematicBody2D" parent="Sprites" index="1" groups=[
 "Puck",
 ]]
 
+editor/display_folded = true
 position = Vector2( 107.853, -3.12803 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="YSort/Puck" index="0"]
+[node name="Sprite" type="Sprite" parent="Sprites/Puck" index="0"]
 
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Puck" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Puck" index="1"]
 
 shape = SubResource( 4 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="SoundHit" type="AudioStreamPlayer2D" parent="Sprites/Puck" index="2"]
+
+stream = ExtResource( 6 )
+volume_db = -10.0
+autoplay = false
+max_distance = 500.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 [node name="Rink" type="Sprite" parent="." index="1"]
 
 position = Vector2( 147.747, 83.8396 )
 z_index = -1
-texture = ExtResource( 5 )
+texture = ExtResource( 7 )
 _sections_unfolded = [ "Z Index" ]
 
 [node name="RinkBody" type="StaticBody2D" parent="Rink" index="0" groups=[
@@ -142,7 +216,7 @@ rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
-[node name="Label2" type="Label" parent="CanvasLayer" index="0"]
+[node name="FPS" type="Label" parent="CanvasLayer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -161,10 +235,13 @@ size_flags_vertical = 4
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0.92549, 0.835294, 0.427451, 1 )
-text = "Hello world"
+text = "FPS:"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+script = ExtResource( 9 )
 _sections_unfolded = [ "Theme", "custom_colors", "custom_fonts", "custom_styles" ]
+
+[connection signal="timeout" from="Sprites/Player/SkateSoundTimer" to="Sprites/Player" method="_on_SkateSoundTimer_timeout"]
 
 
