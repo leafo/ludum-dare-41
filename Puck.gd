@@ -31,7 +31,6 @@ func push(direction):
 	velocity = velocity.clamped(MAX_SPEED)
 
 func on_hit(): 
-	print("puck on hit...")
 	$SoundHit.play()
 
 func check_for_hits():
@@ -42,3 +41,7 @@ func check_for_hits():
 		if "PuckBounce" in object.get_groups():
 			on_hit()
 			velocity = (-velocity).reflect(collision.normal)
+
+			if "Target" in object.get_groups():
+				object.take_hit(collision, self)
+
