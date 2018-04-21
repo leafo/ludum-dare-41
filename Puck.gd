@@ -3,6 +3,7 @@ extends KinematicBody2D
 const MAX_SPEED = 200
 const FRICTION = 1.5
 const EPSILON = 0.00001
+const SHOOT_SPEED = 300
 
 var velocity = Vector2()
 
@@ -30,10 +31,18 @@ func push(direction):
 	velocity += direction
 	velocity = velocity.clamped(MAX_SPEED)
 
+func shoot(direction): 
+	push(direction * SHOOT_SPEED)
+	on_hit()
+	if rand_range(0,1) < 0.5:
+		$BounceAnimation.play("Bounce")
+	else:
+		$BounceAnimation.play("BounceFlip")
+
 func on_hit(): 
 	$SoundHit.play()
 	if velocity.length() > 95:
-		$AnimationPlayer.play("HitHoriz")
+		$HitAnimation.play("HitHoriz")
 
 func check_for_hits():
 	for i in range(get_slide_count()):

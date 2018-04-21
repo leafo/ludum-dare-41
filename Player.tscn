@@ -56,7 +56,7 @@ custom_solver_bias = 0.0
 radius = 52.3749
 height = 71.6971
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[node name="Player" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 1
@@ -90,6 +90,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CameraTarget" type="Position2D" parent="." index="3"]
 
+editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Camera" type="Camera2D" parent="CameraTarget" index="0"]

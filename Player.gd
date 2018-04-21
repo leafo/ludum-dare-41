@@ -89,7 +89,6 @@ func position_camera():
 	for body in $PuckCameraZone.get_overlapping_bodies():
 		if "Puck" in body.get_groups():
 			var to_puck = body.position - position
-			print(to_puck.length())
 			offset += to_puck
 			count += 1
 
@@ -100,8 +99,7 @@ func shoot_puck():
 	var puck = get_parent().get_node("Puck")
 	var distance = position.distance_to(puck.position)
 	if distance < 30: 
-		puck.push((puck.position - position).normalized() * 300)
-		puck.on_hit()
+		puck.shoot((puck.position - position).normalized())
 
 func check_for_hits():
 	for i in range(get_slide_count()):
@@ -112,14 +110,12 @@ func check_for_hits():
 			object.push(collision.normal * -100)
 
 func start_skating():
-	print("start skating")
 	skating = true
 	$SkateSoundTimer.wait_time = 0.4
 	$SkateSoundTimer/Animation.play("StartSkating")
 	$SkateSoundTimer.start()
 
 func _on_SkateSoundTimer_timeout():
-	print("timer timed out......")
 	$SoundSkate.play()
 	$SkateSoundTimer.start()
 
