@@ -7,10 +7,10 @@ path="res://.import/sprite.png-b0f19e0b2f0f9e68f793c2fc03caef53.stex"
 [deps]
 
 source_file="res://images/sprite.png"
-source_md5="21903d27a48a80245088fc0b4ff459d6"
+source_md5="b1836faac8df55de69a2f4ca8c6a6448"
 
 dest_files=[ "res://.import/sprite.png-b0f19e0b2f0f9e68f793c2fc03caef53.stex" ]
-dest_md5="97dc6dbae5891850d6d69acd7ebaa084"
+dest_md5="c000182b6cb19b0214cdb23fd5b53d2a"
 
 [params]
 

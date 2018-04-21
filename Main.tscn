@@ -1,14 +1,21 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
-[ext_resource path="res://images/sprite.png" type="Texture" id=2]
-[ext_resource path="res://sounds/skate.wav" type="AudioStream" id=3]
-[ext_resource path="res://Puck.gd" type="Script" id=4]
-[ext_resource path="res://images/puck.png" type="Texture" id=5]
-[ext_resource path="res://sounds/puck_hit.wav" type="AudioStream" id=6]
-[ext_resource path="res://images/bg.png" type="Texture" id=7]
-[ext_resource path="res://fonts/HelvetiPixel.ttf" type="DynamicFontData" id=8]
-[ext_resource path="res://FPS.gd" type="Script" id=9]
+[ext_resource path="res://Circle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Dither.shader" type="Shader" id=3]
+[ext_resource path="res://images/sprite.png" type="Texture" id=4]
+[ext_resource path="res://sounds/skate.wav" type="AudioStream" id=5]
+[ext_resource path="res://Puck.gd" type="Script" id=6]
+[ext_resource path="res://images/puck.png" type="Texture" id=7]
+[ext_resource path="res://sounds/puck_hit.wav" type="AudioStream" id=8]
+[ext_resource path="res://images/bg.png" type="Texture" id=9]
+[ext_resource path="res://fonts/HelvetiPixel.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://FPS.gd" type="Script" id=11]
+
+[sub_resource type="ShaderMaterial" id=7]
+
+render_priority = 0
+shader = ExtResource( 3 )
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -58,7 +65,7 @@ extents = Vector2( 3.59009, 2.58511 )
 size = 16
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 8 )
+font_data = ExtResource( 10 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Resource", "Settings" ]
 
 [node name="Main" type="Node" index="0"]
@@ -80,21 +87,27 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Sprites/Player" index="0"]
+[node name="Shadow" parent="Sprites/Player" index="0" instance=ExtResource( 2 )]
 
-texture = ExtResource( 2 )
+material = SubResource( 7 )
+_sections_unfolded = [ "Material", "Transform", "Z Index" ]
+color = Color( 0.32549, 0.345098, 0.403922, 1 )
+
+[node name="Sprite" type="Sprite" parent="Sprites/Player" index="1"]
+
+texture = ExtResource( 4 )
 hframes = 2
 _sections_unfolded = [ "Animation", "Offset", "Transform" ]
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Player" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Player" index="2"]
 
 position = Vector2( -1.36412, 7.33215 )
 shape = SubResource( 1 )
 
-[node name="Camera" type="Camera2D" parent="Sprites/Player" index="2"]
+[node name="Camera" type="Camera2D" parent="Sprites/Player" index="3"]
 
 anchor_mode = 1
 rotating = false
@@ -120,9 +133,9 @@ editor_draw_limits = false
 editor_draw_drag_margin = false
 _sections_unfolded = [ "Smoothing" ]
 
-[node name="SoundSkate" type="AudioStreamPlayer2D" parent="Sprites/Player" index="3"]
+[node name="SoundSkate" type="AudioStreamPlayer2D" parent="Sprites/Player" index="4"]
 
-stream = ExtResource( 3 )
+stream = ExtResource( 5 )
 volume_db = -15.0
 autoplay = false
 max_distance = 500.0
@@ -130,7 +143,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="SkateSoundTimer" type="Timer" parent="Sprites/Player" index="4"]
+[node name="SkateSoundTimer" type="Timer" parent="Sprites/Player" index="5"]
 
 process_mode = 1
 wait_time = 0.392507
@@ -158,14 +171,14 @@ input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
-script = ExtResource( 4 )
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Sprites/Puck" index="0"]
 
-texture = ExtResource( 5 )
+texture = ExtResource( 7 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Puck" index="1"]
@@ -175,7 +188,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="SoundHit" type="AudioStreamPlayer2D" parent="Sprites/Puck" index="2"]
 
-stream = ExtResource( 6 )
+stream = ExtResource( 8 )
 volume_db = -10.0
 autoplay = false
 max_distance = 500.0
@@ -187,7 +200,7 @@ area_mask = 1
 
 position = Vector2( 147.747, 83.8396 )
 z_index = -1
-texture = ExtResource( 7 )
+texture = ExtResource( 9 )
 _sections_unfolded = [ "Z Index" ]
 
 [node name="RinkBody" type="StaticBody2D" parent="Rink" index="0" groups=[
@@ -239,7 +252,7 @@ text = "FPS:"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-script = ExtResource( 9 )
+script = ExtResource( 11 )
 _sections_unfolded = [ "Theme", "custom_colors", "custom_fonts", "custom_styles" ]
 
 [connection signal="timeout" from="Sprites/Player/SkateSoundTimer" to="Sprites/Player" method="_on_SkateSoundTimer_timeout"]

@@ -30,11 +30,15 @@ func push(direction):
 	velocity += direction
 	velocity = velocity.clamped(MAX_SPEED)
 
+func on_hit(): 
+	print("puck on hit...")
+	$SoundHit.play()
+
 func check_for_hits():
 	for i in range(get_slide_count()):
 		var collision = get_slide_collision(i)
 		var object = collision.collider
 
 		if "Rink" in object.get_groups():
-			$SoundHit.play()
+			on_hit()
 			velocity = (-velocity).reflect(collision.normal)

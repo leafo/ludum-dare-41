@@ -84,7 +84,8 @@ func shoot_puck():
 	var puck = get_parent().get_node("Puck")
 	var distance = position.distance_to(puck.position)
 	if distance < 30: 
-		puck.push((puck.position - position).normalized() * 200)
+		puck.on_hit()
+		puck.push((puck.position - position).normalized() * 300)
 
 func check_for_hits():
 	for i in range(get_slide_count()):
@@ -92,7 +93,6 @@ func check_for_hits():
 		var object = collision.collider
 
 		if "Puck" in object.get_groups():
-			print("Hit puck")
 			object.push(collision.normal * -100)
 
 func start_skating():
