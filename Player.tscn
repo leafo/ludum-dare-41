@@ -1,0 +1,140 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Shadow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Dither.shader" type="Shader" id=3]
+[ext_resource path="res://images/sprite.png" type="Texture" id=4]
+[ext_resource path="res://sounds/skate.wav" type="AudioStream" id=5]
+
+[sub_resource type="ShaderMaterial" id=1]
+
+render_priority = 0
+shader = ExtResource( 3 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 9.54917, 3.49828 )
+
+[sub_resource type="Animation" id=3]
+
+resource_name = "StartSkating"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:wait_time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.4, 0.2 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../SoundSkate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+} ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Shadow" parent="." index="0" instance=ExtResource( 2 )]
+
+material = SubResource( 1 )
+position = Vector2( 0, 1 )
+
+[node name="Sprite" type="Sprite" parent="." index="1"]
+
+position = Vector2( 0, -8 )
+texture = ExtResource( 4 )
+hframes = 2
+_sections_unfolded = [ "Animation", "Offset", "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="2"]
+
+shape = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Camera" type="Camera2D" parent="." index="3"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 10.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Smoothing" ]
+
+[node name="SoundSkate" type="AudioStreamPlayer2D" parent="." index="4"]
+
+stream = ExtResource( 5 )
+volume_db = -15.0
+autoplay = false
+max_distance = 500.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="SkateSoundTimer" type="Timer" parent="." index="5"]
+
+process_mode = 1
+wait_time = 0.392507
+one_shot = true
+autostart = false
+
+[node name="Animation" type="AnimationPlayer" parent="SkateSoundTimer" index="0"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/StartSkating = SubResource( 3 )
+blend_times = [  ]
+_sections_unfolded = [ "Playback Options" ]
+
+[connection signal="timeout" from="SkateSoundTimer" to="." method="_on_SkateSoundTimer_timeout"]
+
+
