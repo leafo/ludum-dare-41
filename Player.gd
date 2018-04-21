@@ -11,9 +11,11 @@ func _process(delta):
 	var movement = Vector2(0,0)
 
 	if Input.is_action_pressed("ui_left"): 
+		$Sprite.flip_h = false
 		movement.x -= 1
 
 	if Input.is_action_pressed("ui_right"): 
+		$Sprite.flip_h = true
 		movement.x += 1
 
 	if Input.is_action_pressed("ui_up"): 
@@ -39,5 +41,5 @@ func check_for_hits():
 
 		if "Puck" in object.get_groups():
 			print("Hit puck")
-			object.push(collision.get_normal() * -20)
+			object.push(collision.get_normal() * -100)
 
