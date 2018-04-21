@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bg.png-eb9a5114fbb694d786bd5740285f289c.stex"
+path="res://.import/puck.png-cbacdf18270735c78a5b64345eb96798.stex"
 
 [deps]
 
-source_file="res://images/bg.png"
-source_md5="2cc4bbdc582cd1cf9c89d67b391530a4"
+source_file="res://images/puck.png"
+source_md5="49719edb4f0a00c4b59aa7f6df4e7a41"
 
-dest_files=[ "res://.import/bg.png-eb9a5114fbb694d786bd5740285f289c.stex" ]
-dest_md5="6e9b372d7600cbe8102b1a40c3d47661"
+dest_files=[ "res://.import/puck.png-cbacdf18270735c78a5b64345eb96798.stex" ]
+dest_md5="8922a0955d56166cfb8b278cc378d8c1"
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -28,5 +28,5 @@ process/premult_alpha=false
 process/HDR_as_SRGB=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
