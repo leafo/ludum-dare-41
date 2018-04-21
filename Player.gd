@@ -60,5 +60,5 @@ func check_for_hits():
 
 		if "Puck" in object.get_groups():
 			print("Hit puck")
-			object.push(collision.get_normal() * -100)
+			object.push(collision.normal * -100)
 

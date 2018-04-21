@@ -4,8 +4,8 @@
 [ext_resource path="res://images/sprite.png" type="Texture" id=2]
 [ext_resource path="res://Puck.gd" type="Script" id=3]
 [ext_resource path="res://images/puck.png" type="Texture" id=4]
-[ext_resource path="res://fonts/HelvetiPixel.ttf" type="DynamicFontData" id=5]
-[ext_resource path="res://images/bg.png" type="Texture" id=6]
+[ext_resource path="res://images/bg.png" type="Texture" id=5]
+[ext_resource path="res://fonts/HelvetiPixel.ttf" type="DynamicFontData" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -22,7 +22,7 @@ extents = Vector2( 3.59009, 2.58511 )
 size = 16
 use_mipmaps = false
 use_filter = false
-font_data = ExtResource( 5 )
+font_data = ExtResource( 6 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Resource", "Settings" ]
 
 [node name="Main" type="Node" index="0"]
@@ -89,7 +89,6 @@ _sections_unfolded = [ "Smoothing" ]
 "Puck",
 ]]
 
-editor/display_folded = true
 position = Vector2( 107.853, -3.12803 )
 input_pickable = false
 collision_layer = 1
@@ -110,16 +109,49 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 shape = SubResource( 4 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Label2" type="Label" parent="." index="1"]
+[node name="Rink" type="Sprite" parent="." index="1"]
+
+position = Vector2( 147.747, 83.8396 )
+z_index = -1
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Z Index" ]
+
+[node name="RinkBody" type="StaticBody2D" parent="Rink" index="0" groups=[
+"Rink",
+]]
+
+position = Vector2( -147.747, -83.8396 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Rink/RinkBody" index="0"]
+
+build_mode = 1
+polygon = PoolVector2Array( 193.523, -41.1703, 4.93759, -36.307, -28.0244, -30.3631, -69.0917, -6.58726, -90.1657, 16.6482, -112.32, 58.2559, -116.643, 100.944, -109.619, 140.931, -78.8181, 190.644, -33.9683, 217.122, 18.9869, 227.388, 306.999, 228.469, 445.871, 227.388, 443.169, -34.1456 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="Label2" type="Label" parent="CanvasLayer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 77.0
-margin_top = 10.0
-margin_right = 137.0
-margin_bottom = 24.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 62.0
+margin_bottom = 16.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -127,17 +159,12 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.92549, 0.835294, 0.427451, 1 )
 text = "Hello world"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
-
-[node name="Background" type="Sprite" parent="." index="2"]
-
-position = Vector2( 0.255772, 3.23978 )
-z_index = -1
-texture = ExtResource( 6 )
-_sections_unfolded = [ "Z Index" ]
+_sections_unfolded = [ "Theme", "custom_colors", "custom_fonts", "custom_styles" ]
 
 

@@ -24,7 +24,16 @@ func _process(delta):
 			velocity = velocity.linear_interpolate(Vector2(), delta * FRICTION)
 
 	move_and_slide(velocity)
+	check_for_hits()
 
 func push(direction):
 	velocity += direction
 	velocity = velocity.clamped(MAX_SPEED)
+
+func check_for_hits():
+	for i in range(get_slide_count()):
+		var collision = get_slide_collision(i)
+		var object = collision.collider
+
+		if "Rink" in object.get_groups():
+			velocity = (-velocity).reflect(collision.normal)
