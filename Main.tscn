@@ -1,13 +1,13 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://Player.gd" type="Script" id=1]
-[ext_resource path="res://Shadow.tscn" type="PackedScene" id=2]
-[ext_resource path="res://images/sprite.png" type="Texture" id=3]
-[ext_resource path="res://sounds/skate.wav" type="AudioStream" id=4]
-[ext_resource path="res://Puck.gd" type="Script" id=5]
-[ext_resource path="res://images/puck.png" type="Texture" id=6]
-[ext_resource path="res://sounds/puck_hit.wav" type="AudioStream" id=7]
-[ext_resource path="res://images/bg.png" type="Texture" id=8]
+[ext_resource path="res://images/bg.png" type="Texture" id=1]
+[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://Shadow.tscn" type="PackedScene" id=3]
+[ext_resource path="res://images/sprite.png" type="Texture" id=4]
+[ext_resource path="res://sounds/skate.wav" type="AudioStream" id=5]
+[ext_resource path="res://Puck.gd" type="Script" id=6]
+[ext_resource path="res://images/puck.png" type="Texture" id=7]
+[ext_resource path="res://sounds/puck_hit.wav" type="AudioStream" id=8]
 [ext_resource path="res://fonts/HelvetiPixel.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://FPS.gd" type="Script" id=10]
 
@@ -62,32 +62,105 @@ use_filter = false
 font_data = ExtResource( 9 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Resource", "Settings" ]
 
+[sub_resource type="Shader" id=8]
+
+code = "shader_type canvas_item;
+
+uniform float epsilon : hint_range(0, 0.005); // = 0.005;
+uniform vec4 scanline_color : hint_color;
+uniform float distort : hint_range(-1,1);
+
+float cubic_bez(float p0, float p1, float p2, float p3, float t) {
+	float nt = (1.0 - t);
+	float nt2 = nt * nt;
+	float nt3 = nt2 *  nt;
+	float t2 = t * t;
+	float t3 = t2 * t;
+	return (nt3 * p0) + (3.0 * nt2 * t * p1) + (3.0 * nt * t2 * p2) + (t3 * p3);
+}
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	uv.x = cubic_bez(0, 0.0 + distort, 1.0 - distort, 1, uv.x);
+	uv.y = cubic_bez(0, 0.0 + distort, 1.0 - distort, 1, uv.y);
+	float r = textureLod(SCREEN_TEXTURE, uv + vec2(epsilon, epsilon), 0.0).r;
+	float g = textureLod(SCREEN_TEXTURE, uv + vec2(0.0, -epsilon), 0.0).g;
+	float b = textureLod(SCREEN_TEXTURE, uv + vec2(-epsilon, 0.0), 0.0).b;
+	
+	vec3 out_color = vec3(r,g,b);
+
+	if (int(FRAGCOORD.y) % 2 == 0) {
+		out_color = mix(out_color, scanline_color.rgb, scanline_color.a);
+	}
+	
+	COLOR.rgb = out_color;
+}"
+
+[sub_resource type="ShaderMaterial" id=9]
+
+render_priority = 0
+shader = SubResource( 8 )
+shader_param/epsilon = 0.001
+shader_param/scanline_color = Color( 0.160784, 0.152941, 0.196078, 0.0777647 )
+shader_param/distort = 0.4
+_sections_unfolded = [ "shader_param" ]
+
 [node name="Main" type="Node" index="0"]
 
-[node name="Sprites" type="YSort" parent="." index="0"]
+[node name="Rink" type="Sprite" parent="." index="0"]
+
+editor/display_folded = true
+position = Vector2( 147.747, 83.8396 )
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Z Index" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="RinkBody" type="StaticBody2D" parent="Rink" index="0" groups=[
+"Rink",
+]]
+
+position = Vector2( -147.747, -83.8396 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Rink/RinkBody" index="0"]
+
+visible = false
+build_mode = 1
+polygon = PoolVector2Array( 193.523, -41.1703, 4.93759, -36.307, -28.0244, -30.3631, -69.0917, -6.58726, -90.1657, 16.6482, -112.32, 58.2559, -116.643, 100.944, -109.619, 140.931, -78.8181, 190.644, -33.9683, 217.122, 18.9869, 227.388, 306.999, 228.469, 445.871, 227.388, 443.169, -34.1456 )
+
+[node name="Sprites" type="YSort" parent="." index="1"]
 
 position = Vector2( 49.4952, 58.7185 )
 sort_enabled = true
 
 [node name="Player" type="KinematicBody2D" parent="Sprites" index="0"]
 
+editor/display_folded = true
 position = Vector2( 1.36412, -7.33215 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Shadow" parent="Sprites/Player" index="0" instance=ExtResource( 2 )]
+[node name="Shadow" parent="Sprites/Player" index="0" instance=ExtResource( 3 )]
 
 position = Vector2( 0, 10 )
 
 [node name="Sprite" type="Sprite" parent="Sprites/Player" index="1"]
 
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 hframes = 2
 _sections_unfolded = [ "Animation", "Offset", "Transform" ]
 __meta__ = {
@@ -127,7 +200,7 @@ _sections_unfolded = [ "Smoothing" ]
 
 [node name="SoundSkate" type="AudioStreamPlayer2D" parent="Sprites/Player" index="4"]
 
-stream = ExtResource( 4 )
+stream = ExtResource( 5 )
 volume_db = -15.0
 autoplay = false
 max_distance = 500.0
@@ -157,24 +230,25 @@ _sections_unfolded = [ "Playback Options" ]
 "Puck",
 ]]
 
+editor/display_folded = true
 position = Vector2( 107.853, -3.12803 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Shadow" parent="Sprites/Puck" index="0" instance=ExtResource( 2 )]
+[node name="Shadow" parent="Sprites/Puck" index="0" instance=ExtResource( 3 )]
 
 position = Vector2( 0, 1 )
 radius = 5
 
 [node name="Sprite" type="Sprite" parent="Sprites/Puck" index="1"]
 
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/Puck" index="2"]
@@ -184,38 +258,13 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="SoundHit" type="AudioStreamPlayer2D" parent="Sprites/Puck" index="3"]
 
-stream = ExtResource( 7 )
+stream = ExtResource( 8 )
 volume_db = -10.0
 autoplay = false
 max_distance = 500.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
-
-[node name="Rink" type="Sprite" parent="." index="1"]
-
-position = Vector2( 147.747, 83.8396 )
-z_index = -1
-texture = ExtResource( 8 )
-_sections_unfolded = [ "Z Index" ]
-
-[node name="RinkBody" type="StaticBody2D" parent="Rink" index="0" groups=[
-"Rink",
-]]
-
-position = Vector2( -147.747, -83.8396 )
-input_pickable = false
-collision_layer = 1
-collision_mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Rink/RinkBody" index="0"]
-
-build_mode = 1
-polygon = PoolVector2Array( 193.523, -41.1703, 4.93759, -36.307, -28.0244, -30.3631, -69.0917, -6.58726, -90.1657, 16.6482, -112.32, 58.2559, -116.643, 100.944, -109.619, 140.931, -78.8181, 190.644, -33.9683, 217.122, 18.9869, 227.388, 306.999, 228.469, 445.871, 227.388, 443.169, -34.1456 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
 
@@ -250,6 +299,22 @@ lines_skipped = 0
 max_lines_visible = -1
 script = ExtResource( 10 )
 _sections_unfolded = [ "Theme", "custom_colors", "custom_fonts", "custom_styles" ]
+
+[node name="ScreenShader" type="ColorRect" parent="CanvasLayer" index="1"]
+
+material = SubResource( 9 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 1, 1, 1, 1 )
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Material" ]
 
 [connection signal="timeout" from="Sprites/Player/SkateSoundTimer" to="Sprites/Player" method="_on_SkateSoundTimer_timeout"]
 
