@@ -6,6 +6,7 @@ const ACCELERATION = 10
 const EPSILON = 0.00001
 
 var skating = false
+var just_tapped = false
 
 var velocity = Vector2()
 
@@ -107,6 +108,10 @@ func check_for_hits():
 		var object = collision.collider
 
 		if "Puck" in object.get_groups():
+			if not just_tapped:
+				$SoundTap.play()
+				just_tapped = true
+				$SoundTap/Timeout.start()
 			object.push(collision.normal * -100)
 
 func start_skating():
@@ -119,3 +124,6 @@ func _on_SkateSoundTimer_timeout():
 	$SoundSkate.play()
 	$SkateSoundTimer.start()
 
+
+func _on_TapTimeout_timeout():
+	just_tapped = false

@@ -7,6 +7,8 @@ const SHOOT_SPEED = 300
 
 var velocity = Vector2()
 
+var just_hit = false
+
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
@@ -40,7 +42,11 @@ func shoot(direction):
 		$BounceAnimation.play("BounceFlip")
 
 func on_hit(): 
-	$SoundHit.play()
+	if not just_hit:
+		just_hit = true
+		$SoundHit.play()
+		$SoundHit/Timeout.start()
+
 	if velocity.length() > 95:
 		$HitAnimation.play("HitHoriz")
 
@@ -56,3 +62,6 @@ func check_for_hits():
 			if "Target" in object.get_groups():
 				object.take_hit(collision, self)
 
+
+func _on_Timeout_timeout():
+	just_hit = false
