@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://images/bg.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://images/target.png" type="Texture" id=9]
 [ext_resource path="res://fonts/HelvetiPixel.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://FPS.gd" type="Script" id=11]
+[ext_resource path="res://ScreenShader.gd" type="Script" id=12]
 
 [sub_resource type="RectangleShape2D" id=11]
 
@@ -131,8 +132,10 @@ _sections_unfolded = [ "Offset", "Transform", "Z Index" ]
 
 [node name="RinkBody" type="StaticBody2D" parent="Rink" index="0" groups=[
 "Rink",
+"PuckBounce",
 ]]
 
+editor/display_folded = true
 position = Vector2( -147.747, -83.8396 )
 input_pickable = false
 collision_layer = 1
@@ -312,9 +315,10 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="Target" type="KinematicBody2D" parent="Sprites" index="2"]
+[node name="Target" type="KinematicBody2D" parent="Sprites" index="2" groups=[
+"PuckBounce",
+]]
 
-editor/display_folded = true
 position = Vector2( 66.9341, -25.2979 )
 input_pickable = false
 collision_layer = 1
@@ -388,6 +392,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 color = Color( 1, 1, 1, 1 )
+script = ExtResource( 12 )
 _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Material" ]
 __meta__ = {
 "_edit_lock_": true

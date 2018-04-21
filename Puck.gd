@@ -39,6 +39,6 @@ func check_for_hits():
 		var collision = get_slide_collision(i)
 		var object = collision.collider
 
-		if "Rink" in object.get_groups():
+		if "PuckBounce" in object.get_groups():
 			on_hit()
 			velocity = (-velocity).reflect(collision.normal)
