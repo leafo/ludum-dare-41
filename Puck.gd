@@ -1,9 +1,10 @@
 extends KinematicBody2D
 
-const SPEED = 200
+const MAX_SPEED = 200
+const FRICTION = 1.5
 const EPSILON = 0.00001
 
-var movement = Vector2()
+var velocity = Vector2()
 
 # class member variables go here, for example:
 # var a = 2
@@ -15,14 +16,15 @@ func _ready():
 	pass
 
 func _process(delta):
-	# decay movement
-	if movement.length_squared() != 0:
-		if movement.length_squared() <= EPSILON:
-			movement = Vector2()
+	# decay velocity
+	if velocity.length_squared() != 0:
+		if velocity.length_squared() <= EPSILON:
+			velocity = Vector2()
 		else:
-			movement = movement.linear_interpolate(Vector2(), delta / 0.1)
+			velocity = velocity.linear_interpolate(Vector2(), delta * FRICTION)
 
-	move_and_slide(movement)
+	move_and_slide(velocity)
 
 func push(direction):
-	movement += direction
+	velocity += direction
+	velocity = velocity.clamped(MAX_SPEED)

@@ -1,6 +1,11 @@
 extends KinematicBody2D
 
 const SPEED = 100
+const FRICTION = 5
+const ACCELERATION = 10
+const EPSILON = 0.00001
+
+var velocity = Vector2()
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -25,14 +30,28 @@ func _process(delta):
 		movement.y += 1
 
 	if Input.is_action_just_pressed("ui_accept"):
-		var puck = get_parent().get_node("Puck")
-		print("shoot", puck)
+		shoot_puck()
 
 	if movement.length_squared() != 0:
 		movement = movement.normalized() * SPEED
+		velocity = velocity.linear_interpolate(movement, delta * ACCELERATION)
+	else:
+		var ls = velocity.length_squared() 
 
-	move_and_slide(movement)
+		if ls > 0:
+			if ls < EPSILON:
+				velocity = Vector2()
+			else:
+				velocity = velocity.linear_interpolate(movement, delta * FRICTION)
+
+	move_and_slide(velocity)
 	check_for_hits()
+
+func shoot_puck():
+	var puck = get_parent().get_node("Puck")
+	var distance = position.distance_to(puck.position)
+	if distance < 30: 
+		puck.push((puck.position - position).normalized() * 200)
 
 func check_for_hits():
 	for i in range(get_slide_count()):
