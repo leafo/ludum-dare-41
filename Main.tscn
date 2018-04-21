@@ -133,7 +133,7 @@ shader_param/scanline_color = Color( 0.160784, 0.152941, 0.196078, 0.0777647 )
 shader_param/distort = 0.4
 _sections_unfolded = [ "shader_param" ]
 
-[node name="Main" type="Node" index="0"]
+[node name="Main" type="Node"]
 
 [node name="Rink" type="Sprite" parent="." index="0"]
 

@@ -10,8 +10,6 @@ var skating = false
 var velocity = Vector2()
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	pass
 
 func deadzone_normalize(input, min_len=0.2, max_len=0.95):
@@ -79,6 +77,24 @@ func _process(delta):
 
 	move_and_slide(velocity)
 	check_for_hits()
+	position_camera()
+
+func position_camera():
+	var camera = $CameraTarget
+	# see if we have any pucks in range
+
+	var offset = Vector2(0, 0)
+	var count = 1
+
+	for body in $PuckCameraZone.get_overlapping_bodies():
+		if "Puck" in body.get_groups():
+			var to_puck = body.position - position
+			print(to_puck.length())
+			offset += to_puck
+			count += 1
+
+	offset = offset / count
+	camera.position = offset
 
 func shoot_puck():
 	var puck = get_parent().get_node("Puck")

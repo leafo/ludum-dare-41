@@ -2,12 +2,11 @@
 
 [ext_resource path="res://Circle.gd" type="Script" id=1]
 
-[node name="Circle" type="Node2D" index="0"]
+[node name="Circle" type="Node2D"]
 
-position = Vector2( 0, 10 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Material", "Pause", "Transform", "Visibility", "Z Index" ]
-radius = 10
+radius = 5
 color = Color( 0.803922, 0.239216, 0.239216, 1 )
 
 
