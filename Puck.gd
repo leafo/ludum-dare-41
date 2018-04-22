@@ -52,6 +52,10 @@ func shoot(direction):
 	else:
 		$BounceAnimation.play("BounceFlip")
 
+# go through targets hitting them
+func shoot_targets(targets):
+	pass
+
 func grab_by(obj):
 	if held_by:
 		return false

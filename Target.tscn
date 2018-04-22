@@ -46,7 +46,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -6 ), Vector2( 0, -6 ), Vector2( 0, -10 ), Vector2( 0, -6 ) ]
 }
 
-[node name="Target" type="KinematicBody2D" groups=[
+[node name="Target" type="KinematicBody2D" index="0" groups=[
 "Target",
 "PuckBounce",
 ]]
@@ -78,7 +78,14 @@ _sections_unfolded = [ "Transform" ]
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="HitAnimation" type="AnimationPlayer" parent="." index="3"]
+[node name="StunTimer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 0.3
+one_shot = true
+autostart = false
+
+[node name="HitAnimation" type="AnimationPlayer" parent="." index="4"]
 
 root_node = NodePath("..")
 autoplay = ""
@@ -88,5 +95,7 @@ playback_speed = 2.0
 anims/Hit = SubResource( 3 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
+
+[connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
 
 

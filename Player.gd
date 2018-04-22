@@ -173,12 +173,12 @@ func grab_puck():
 func shoot_puck():
 	# you can only shoot if it's it's near by 
 	if puck.within_range(self):
-		var target = closest_lock()
+		var targets = sorted_targets()
 		var direction = null
 
-		if target:
+		if targets:
 			#shoot puck to object
-			direction = (target.position - puck.position).normalized()
+			direction = (targets[0].position - puck.position).normalized()
 
 		else:
 			# shoot from body to direction
@@ -186,13 +186,13 @@ func shoot_puck():
 
 		puck.shoot(direction)
 
-func closest_lock():
+func sorted_targets():
 	if locked_on.empty():
 		return null
 
 	var closest = locked_on.keys()
 	closest.sort_custom(self, "sort_targets")
-	return closest[0]
+	return closest
 
 func check_for_hits():
 	for i in range(get_slide_count()):
