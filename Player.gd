@@ -107,12 +107,28 @@ func find_targets():
 		return
 
 	var bodies = $LockOnArea.get_overlapping_bodies()
+
+	var seen_items = {}
+
 	for body in bodies:
 		if not "Target" in body.get_groups():
 			continue
 
+		seen_items[body] = true
+
 		if body.lock_on():
 			locked_on[body] = true
+
+	# remove things that are no longer locked on
+	if not locked_on.empty():
+		# remove the lock on
+		for target in locked_on.keys():
+			if seen_items.has(target):
+				continue
+
+			target.remove_lock_on()
+			locked_on.erase(target)
+
 
 func position_camera():
 	var camera = $CameraTarget
