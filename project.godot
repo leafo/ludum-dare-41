@@ -29,6 +29,8 @@ window/stretch/aspect="keep"
 2d_physics/layer_2="player"
 2d_physics/layer_3="puck"
 2d_physics/layer_4="held_puck"
+2d_physics/layer_5="target"
+2d_physics/layer_6="target_stunned"
 
 [physics]
 

@@ -68,7 +68,7 @@ height = 71.6971
 
 input_pickable = false
 collision_layer = 2
-collision_mask = 5
+collision_mask = 53
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
 _sections_unfolded = [ "Collision", "Transform" ]

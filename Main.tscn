@@ -167,7 +167,6 @@ _sections_unfolded = [ "Collision", "Transform", "collision" ]
 
 [node name="Target" parent="Sprites" index="2" instance=ExtResource( 4 )]
 
-editor/display_folded = false
 position = Vector2( 97.7346, 50.3524 )
 
 [node name="Target2" parent="Sprites" index="3" instance=ExtResource( 4 )]

@@ -46,13 +46,13 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -6 ), Vector2( 0, -6 ), Vector2( 0, -10 ), Vector2( 0, -6 ) ]
 }
 
-[node name="Target" type="KinematicBody2D" index="0" groups=[
+[node name="Target" type="KinematicBody2D" groups=[
 "Target",
 "PuckBounce",
 ]]
 
 input_pickable = false
-collision_layer = 1
+collision_layer = 16
 collision_mask = 15
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
