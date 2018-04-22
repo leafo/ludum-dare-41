@@ -75,6 +75,9 @@ func _process(delta):
 		else:
 			grab_puck()
 
+	if Input.is_action_just_pressed("ui_cancel"):
+		$CameraShake.play("Shake")
+
 	if movement.length_squared() != 0:
 		movement = movement.normalized() * SPEED
 		velocity = velocity.linear_interpolate(movement, delta * ACCELERATION)

@@ -1,14 +1,15 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Shadow.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Dither.shader" type="Shader" id=3]
 [ext_resource path="res://images/sprite.png" type="Texture" id=4]
-[ext_resource path="res://Circle.tscn" type="PackedScene" id=5]
-[ext_resource path="res://sounds/tap.wav" type="AudioStream" id=6]
-[ext_resource path="res://sounds/drop.wav" type="AudioStream" id=7]
-[ext_resource path="res://sounds/pickup.wav" type="AudioStream" id=8]
-[ext_resource path="res://sounds/skate.wav" type="AudioStream" id=9]
+[ext_resource path="res://Camera.gd" type="Script" id=5]
+[ext_resource path="res://Circle.tscn" type="PackedScene" id=6]
+[ext_resource path="res://sounds/tap.wav" type="AudioStream" id=7]
+[ext_resource path="res://sounds/drop.wav" type="AudioStream" id=8]
+[ext_resource path="res://sounds/pickup.wav" type="AudioStream" id=9]
+[ext_resource path="res://sounds/skate.wav" type="AudioStream" id=10]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -20,14 +21,13 @@ shader = ExtResource( 3 )
 custom_solver_bias = 0.0
 extents = Vector2( 9.54917, 3.49828 )
 
-[sub_resource type="AudioStreamRandomPitch" id=5]
+[sub_resource type="AudioStreamRandomPitch" id=3]
 
-audio_stream = ExtResource( 9 )
+audio_stream = ExtResource( 10 )
 random_pitch = 1.2
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 
-resource_name = "StartSkating"
 length = 1.0
 loop = false
 step = 0.1
@@ -58,13 +58,44 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id=5]
 
 custom_solver_bias = 0.0
 radius = 52.3749
 height = 71.6971
 
-[node name="Player" type="KinematicBody2D"]
+[sub_resource type="Animation" id=6]
+
+resource_name = "Shake"
+length = 0.5
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraTarget/Camera:shake_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 2.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CameraTarget/Camera:shake_speed")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 5.0, 0.0 ]
+}
+
+[node name="Player" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 2
@@ -98,7 +129,6 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CameraTarget" type="Position2D" parent="." index="3"]
 
-editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Camera" type="Camera2D" parent="CameraTarget" index="0"]
@@ -125,16 +155,19 @@ drag_margin_bottom = 0.2
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
+script = ExtResource( 5 )
 _sections_unfolded = [ "Drag Margin", "Limit", "Smoothing" ]
+shake_amount = 0.0
+shake_speed = 0.0
 
-[node name="Circle" parent="CameraTarget" index="1" instance=ExtResource( 5 )]
+[node name="Circle" parent="CameraTarget" index="1" instance=ExtResource( 6 )]
 
 visible = false
 
 [node name="SoundTap" type="AudioStreamPlayer2D" parent="." index="4"]
 
 editor/display_folded = true
-stream = ExtResource( 6 )
+stream = ExtResource( 7 )
 volume_db = -5.0
 autoplay = false
 max_distance = 2000.0
@@ -151,7 +184,7 @@ autostart = false
 
 [node name="SoundDrop" type="AudioStreamPlayer2D" parent="." index="5"]
 
-stream = ExtResource( 7 )
+stream = ExtResource( 8 )
 volume_db = -10.0
 autoplay = false
 max_distance = 2000.0
@@ -161,7 +194,7 @@ area_mask = 1
 
 [node name="SoundPickup" type="AudioStreamPlayer2D" parent="." index="6"]
 
-stream = ExtResource( 8 )
+stream = ExtResource( 9 )
 volume_db = -10.0
 autoplay = false
 max_distance = 2000.0
@@ -171,7 +204,7 @@ area_mask = 1
 
 [node name="SoundSkate" type="AudioStreamPlayer2D" parent="." index="7"]
 
-stream = SubResource( 5 )
+stream = SubResource( 3 )
 volume_db = -15.0
 autoplay = false
 max_distance = 500.0
@@ -194,7 +227,7 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/StartSkating = SubResource( 3 )
+anims/StartSkating = SubResource( 4 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
 
@@ -213,11 +246,12 @@ _sections_unfolded = [ "Collision" ]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PuckCameraZone" index="0"]
 
 rotation = 1.5708
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="LockOnArea" type="Area2D" parent="." index="10"]
 
+editor/display_folded = true
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -232,6 +266,16 @@ _sections_unfolded = [ "Transform" ]
 build_mode = 0
 polygon = PoolVector2Array( 0.3302, -0.556969, -40, 40, -80, 50, -90, 0, -80, -50, -40, -40, 0, -10 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="CameraShake" type="AnimationPlayer" parent="." index="11"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Shake = SubResource( 6 )
+blend_times = [  ]
 
 [connection signal="timeout" from="SoundTap/Timeout" to="." method="_on_TapTimeout_timeout"]
 
