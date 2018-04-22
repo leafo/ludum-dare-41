@@ -95,7 +95,7 @@ tracks/1/keys = {
 "values": [ 5.0, 0.0 ]
 }
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[node name="Player" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 2
@@ -129,6 +129,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CameraTarget" type="Position2D" parent="." index="3"]
 
+editor/display_folded = true
 _sections_unfolded = [ "Transform" ]
 
 [node name="Camera" type="Camera2D" parent="CameraTarget" index="0"]
@@ -214,9 +215,8 @@ area_mask = 1
 
 [node name="SkateSoundTimer" type="Timer" parent="." index="8"]
 
-editor/display_folded = true
 process_mode = 1
-wait_time = 0.392507
+wait_time = 0.4
 one_shot = true
 autostart = false
 

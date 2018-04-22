@@ -110,7 +110,7 @@ custom_solver_bias = 0.0
 radius = 15.0
 height = 18.0
 
-[node name="Puck" type="KinematicBody2D" groups=[
+[node name="Puck" type="KinematicBody2D" index="0" groups=[
 "Puck",
 ]]
 
@@ -204,6 +204,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Label" type="Label" parent="." index="7"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -232,6 +233,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Circle" parent="DirectionVector" index="0" instance=ExtResource( 7 )]
 
+visible = false
 position = Vector2( 10, 0 )
 
 [connection signal="timeout" from="SoundHit/Timeout" to="." method="_on_Timeout_timeout"]
