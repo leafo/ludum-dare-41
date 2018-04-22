@@ -9,6 +9,7 @@ onready var combo_counter = $"/root/Main/ComboCounter"
 
 signal health_update(health)
 signal die()
+signal die_animation_finished()
 
 var health = 100
 var skating = false
@@ -287,3 +288,6 @@ func _on_TapTimeout_timeout():
 
 func _on_StunTimer_timeout():
 	stunned = false
+
+func _on_DieAnimation_animation_finished(anim_name):
+	emit_signal("die_animation_finished")
