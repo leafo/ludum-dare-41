@@ -243,7 +243,7 @@ func sort_targets(a, b):
 	return false
 
 func take_damage(amount):
-	health = max(0, health - 10)
+	health = max(0, health - amount)
 	emit_signal("health_update", health)
 
 	if health == 0:

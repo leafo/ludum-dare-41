@@ -195,7 +195,6 @@ damage_speed = 85
 
 position = Vector2( 200.596, 82.6328 )
 damage_speed = 85
-health = 4
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="3"]
 
