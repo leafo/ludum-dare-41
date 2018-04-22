@@ -27,7 +27,7 @@ func _process(delta):
 
 		# out of range, drop it
 		print("puck out of range", (hold_position - position).length())
-		held_by.release_puck()
+		held_by.lose_puck()
 		velocity = Vector2()
 
 	# decay velocity

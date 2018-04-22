@@ -101,13 +101,11 @@ func find_targets():
 		if not locked_on.empty():
 			# remove the lock on
 			for target in locked_on.keys():
-				target.remove_lock_on()
-				locked_on.erase(target)
+				remove_lock_on(target)
 
 		return
 
 	var bodies = $LockOnArea.get_overlapping_bodies()
-
 	var seen_items = {}
 
 	for body in bodies:
@@ -126,9 +124,11 @@ func find_targets():
 			if seen_items.has(target):
 				continue
 
-			target.remove_lock_on()
-			locked_on.erase(target)
+			remove_lock_on(target)
 
+func remove_lock_on(target):
+	target.remove_lock_on()
+	locked_on.erase(target)
 
 func position_camera():
 	var camera = $CameraTarget
@@ -146,6 +146,9 @@ func position_camera():
 	offset = offset / count
 	camera.position = offset
 
+func lose_puck():
+	$SoundDrop.play()
+	release_puck()
 
 func release_puck():
 	if not holding_object: 
@@ -168,9 +171,31 @@ func grab_puck():
 	holding_object = puck
 
 func shoot_puck():
-	var distance = position.distance_to(puck.position)
-	if distance < 30: 
-		puck.shoot((puck.position - position).normalized())
+	# you can only shoot if it's it's near by 
+	if puck.within_range(self):
+		var target = closest_lock()
+
+		if not target:
+			target = puck # shoot to where puck is on body
+
+		puck.shoot((target.position - position).normalized())
+
+func closest_lock():
+	if locked_on.empty():
+		return null
+
+	var distance = null
+	var closest = null
+
+	for target in locked_on.keys():
+		var d = (target.position - position).length_squared()
+		if (distance == null) or (d < distance):
+			distance = d
+			closest = target
+
+	return closest
+
+
 
 func check_for_hits():
 	for i in range(get_slide_count()):
