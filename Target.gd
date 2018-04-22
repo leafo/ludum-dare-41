@@ -18,6 +18,7 @@ func remove_lock_on():
 	current_lock_on = null
 
 func take_hit(collision, object):
+	print("target take hit", object.velocity.length())
 	stun()
 	var speed = object.velocity.length()
 	if speed > 85:

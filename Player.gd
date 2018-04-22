@@ -10,6 +10,7 @@ onready var combo_counter = $"/root/Main/ComboCounter"
 var skating = false
 var just_tapped = false
 var holding_object = null
+var stunned = false
 
 var facing = "left"
 
@@ -75,15 +76,13 @@ func _process(delta):
 		else:
 			grab_puck()
 
-	if Input.is_action_just_pressed("ui_cancel"):
-		$CameraShake.play("Shake")
-
 	if movement.length_squared() != 0:
-		movement = movement.normalized() * SPEED
-		velocity = velocity.linear_interpolate(movement, delta * ACCELERATION)
+		if not stunned:
+			movement = movement.normalized() * SPEED
+			velocity = velocity.linear_interpolate(movement, delta * ACCELERATION)
 
-		if not skating:
-			start_skating()
+			if not skating:
+				start_skating()
 	else:
 		if skating:
 			skating = false
@@ -199,12 +198,17 @@ func check_for_hits():
 	for i in range(get_slide_count()):
 		var collision = get_slide_collision(i)
 		var object = collision.collider
+		var groups = object.get_groups()
 
-		if "Puck" in object.get_groups():
+		if "Enemy" in groups:
+			take_hit(collision, object)
+
+		if "Puck" in groups:
 			if not just_tapped:
 				$SoundTap.play()
 				just_tapped = true
 				$SoundTap/Timeout.start()
+
 			object.push(collision.normal * -100)
 
 func get_hold_position():
@@ -229,6 +233,17 @@ func sort_targets(a, b):
 
 	return false
 
+# hit by an enemy
+func take_hit(collision, object):
+	if stunned:
+		return
+
+	print("Player takes hit")
+	stunned = true
+	$StunTimer.start()
+	$CameraShake.play("Shake")
+	$HitAnimation.play("Hit")
+	velocity = (position - object.position).normalized() * 100
 
 
 func _on_SkateSoundTimer_timeout():
@@ -237,3 +252,6 @@ func _on_SkateSoundTimer_timeout():
 
 func _on_TapTimeout_timeout():
 	just_tapped = false
+
+func _on_StunTimer_timeout():
+	stunned = false
