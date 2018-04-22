@@ -5,6 +5,8 @@ var LockOn = preload("res://LockOn.tscn")
 var current_lock_on = null
 var stunned = false
 
+export var damage_speed = 85
+
 func lock_on():
 	if current_lock_on:
 		return false
@@ -18,10 +20,9 @@ func remove_lock_on():
 	current_lock_on = null
 
 func take_hit(collision, object):
-	print("target take hit", object.velocity.length())
 	stun()
 	var speed = object.velocity.length()
-	if speed > 85:
+	if speed > damage_speed:
 		$HitAnimation.play("Hit")
 
 func stun():

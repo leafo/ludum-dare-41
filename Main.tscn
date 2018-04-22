@@ -169,26 +169,33 @@ _sections_unfolded = [ "Collision", "Transform", "collision" ]
 [node name="Target" parent="Sprites" index="2" instance=ExtResource( 5 )]
 
 position = Vector2( 97.7346, 50.3524 )
+damage_speed = 85
 
 [node name="Target5" parent="Sprites" index="3" instance=ExtResource( 5 )]
 
 position = Vector2( 129.512, 159.983 )
+damage_speed = 85
 
 [node name="Target2" parent="Sprites" index="4" instance=ExtResource( 5 )]
 
 position = Vector2( 78.4506, 89.1193 )
+damage_speed = 85
 
 [node name="Target3" parent="Sprites" index="5" instance=ExtResource( 5 )]
 
 position = Vector2( 78.4506, 150.789 )
+damage_speed = 85
 
 [node name="Target4" parent="Sprites" index="6" instance=ExtResource( 5 )]
 
 position = Vector2( 95.814, 195.694 )
+damage_speed = 85
 
 [node name="Enemy" parent="Sprites" index="7" instance=ExtResource( 6 )]
 
 position = Vector2( 200.596, 82.6328 )
+damage_speed = 85
+health = 4
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="3"]
 
