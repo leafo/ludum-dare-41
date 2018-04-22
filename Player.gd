@@ -5,6 +5,8 @@ const FRICTION = 5
 const ACCELERATION = 10
 const EPSILON = 0.00001
 
+onready var combo_counter = $"/root/Main/ComboCounter"
+
 var skating = false
 var just_tapped = false
 var holding_object = null
@@ -166,7 +168,8 @@ func grab_puck():
 
 	if not puck.grab_by(self):
 		return
-	
+
+	combo_counter.end_combo()
 	$SoundPickup.play()
 	holding_object = puck
 

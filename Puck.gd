@@ -5,6 +5,8 @@ const FRICTION = 1.5
 const EPSILON = 0.00001
 const SHOOT_SPEED = 300
 
+onready var combo_counter = $"/root/Main/ComboCounter"
+
 var velocity = Vector2()
 
 var just_hit = false
@@ -117,6 +119,8 @@ func check_for_hits():
 
 			if "Target" in object.get_groups():
 				object.take_hit(collision, self)
+				combo_counter.increment_combo()
+
 				if remaining_targets:
 					var angle = pop_next_target()
 					$DirectionVector.rotation_degrees = angle.angle() / PI * 180
