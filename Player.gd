@@ -64,8 +64,7 @@ func _process(delta):
 
 	if Input.is_action_just_pressed("ui_accept"):
 		if holding_object:
-			holding_object.release()
-			holding_object = null
+			release_puck()
 			shoot_puck()
 		else:
 			grab_puck()
@@ -109,7 +108,17 @@ func position_camera():
 	camera.position = offset
 
 
+func release_puck():
+	if not holding_object: 
+		return
+
+	holding_object.release()
+	holding_object = null
+
 func grab_puck():
+	if not puck.within_range(self):
+		return
+
 	if holding_object:
 		return
 

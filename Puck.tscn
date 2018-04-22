@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Puck.gd" type="Script" id=1]
 [ext_resource path="res://Shadow.tscn" type="PackedScene" id=2]
@@ -102,6 +102,12 @@ tracks/1/keys = {
 "values": [ 0.0, 0.0, -20.0, 0.0, 0.0, 10.0, 0.0 ]
 }
 
+[sub_resource type="CapsuleShape2D" id=7]
+
+custom_solver_bias = 0.0
+radius = 12.1746
+height = 13.1268
+
 [node name="Puck" type="KinematicBody2D" index="0" groups=[
 "Puck",
 ]]
@@ -123,6 +129,8 @@ position = Vector2( 0, 1 )
 radius = 5
 
 [node name="BounceTransform" type="Node2D" parent="." index="1"]
+
+editor/display_folded = true
 
 [node name="Sprite" type="Sprite" parent="BounceTransform" index="0"]
 
@@ -173,6 +181,22 @@ anims/Bounce = SubResource( 4 )
 anims/BounceFlip = SubResource( 5 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
+
+[node name="HoldRadius" type="Area2D" parent="." index="6"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldRadius" index="0"]
+
+rotation = 1.5708
+shape = SubResource( 7 )
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="timeout" from="SoundHit/Timeout" to="." method="_on_Timeout_timeout"]
 

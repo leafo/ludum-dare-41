@@ -1,9 +1,9 @@
 extends KinematicBody2D
 
-const MAX_SPEED = 200
+const MAX_SPEED = 300
 const FRICTION = 1.5
 const EPSILON = 0.00001
-const SHOOT_SPEED = 500
+const SHOOT_SPEED = 300
 
 var velocity = Vector2()
 
@@ -18,9 +18,17 @@ func _ready():
 
 func _process(delta):
 	if held_by: 
-		var target_pos = position.linear_interpolate(held_by.get_hold_position(), min(1, delta * 25))
-		move_and_slide((target_pos - position) / delta)
-		return
+		var hold_position = held_by.get_hold_position()
+
+		if within_range(held_by):
+			var target_pos = position.linear_interpolate(hold_position, min(1, delta * 25))
+			move_and_slide((target_pos - position) / delta)
+			return
+
+		# out of range, drop it
+		print("puck out of range", (hold_position - position).length())
+		held_by.release_puck()
+		velocity = Vector2()
 
 	# decay velocity
 	if velocity.length_squared() != 0:
@@ -82,6 +90,9 @@ func check_for_hits():
 			if "Target" in object.get_groups():
 				object.take_hit(collision, self)
 
+
+func within_range(body):
+	return $HoldRadius.overlaps_body(body)
 
 func _on_Timeout_timeout():
 	just_hit = false

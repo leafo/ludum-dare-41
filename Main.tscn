@@ -73,9 +73,14 @@ _sections_unfolded = [ "shader_param" ]
 
 [node name="Rink" type="Sprite" parent="." index="0"]
 
+editor/display_folded = true
 texture = ExtResource( 1 )
 centered = false
 _sections_unfolded = [ "Offset", "Transform", "Z Index" ]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="RinkBody" type="StaticBody2D" parent="Rink" index="0" groups=[
 "Rink",
@@ -83,7 +88,6 @@ _sections_unfolded = [ "Offset", "Transform", "Z Index" ]
 ]]
 
 editor/display_folded = true
-position = Vector2( -147.747, -83.8396 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 15
@@ -91,45 +95,55 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-_sections_unfolded = [ "Collision" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Rink/RinkBody" index="0"]
 
-position = Vector2( 505.781, 90.7607 )
+position = Vector2( 357.857, 6.9542 )
 shape = SubResource( 11 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Rink/RinkBody" index="1"]
 
-position = Vector2( 504.493, 346.948 )
+position = Vector2( 356.569, 263.141 )
 shape = SubResource( 11 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Rink/RinkBody" index="2"]
 
-position = Vector2( 797.561, 223.319 )
+position = Vector2( 649.637, 139.513 )
+scale = Vector2( 1, 1 )
 shape = SubResource( 12 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Rink/RinkBody" index="3"]
 
-position = Vector2( 167.121, 220.234 )
+position = Vector2( 19.1964, 136.427 )
+scale = Vector2( 1, 1 )
 shape = SubResource( 12 )
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Rink/RinkBody" index="4"]
 
+position = Vector2( -147.924, -83.8064 )
+scale = Vector2( 0.999999, 1 )
 build_mode = 0
 polygon = PoolVector2Array( 695.384, 336.373, 733.16, 328.431, 755.268, 315.982, 773.298, 302.674, 782.098, 286.791, 806.781, 343.241 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Rink/RinkBody" index="5"]
 
+position = Vector2( -147.925, -83.8065 )
+scale = Vector2( 1, 1 )
 build_mode = 0
 polygon = PoolVector2Array( 182.806, 289.39, 190.106, 301.945, 216.677, 321.217, 247.336, 333.48, 270.403, 336.692, 172.002, 350.124 )
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Rink/RinkBody" index="6"]
 
+position = Vector2( -147.924, -83.8064 )
+scale = Vector2( 1, 1 )
 build_mode = 0
 polygon = PoolVector2Array( 183.026, 149.189, 194.39, 131.707, 220.439, 114.399, 252.503, 103.813, 268.341, 101.287, 177.436, 85.7665 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Rink/RinkBody" index="7"]
 
+position = Vector2( -147.924, -83.8065 )
+scale = Vector2( 1, 1 )
 build_mode = 0
 polygon = PoolVector2Array( 696.076, 100.869, 725.804, 107.053, 754.106, 120.133, 775.035, 136.543, 781.694, 149.624, 782.883, 89.2158 )
 
