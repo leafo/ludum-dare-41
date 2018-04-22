@@ -120,7 +120,7 @@ func check_for_hits():
 				if remaining_targets:
 					var angle = pop_next_target()
 					$DirectionVector.rotation_degrees = angle.angle() / PI * 180
-					velocity = angle * velocity.length()
+					velocity = angle * velocity.length() * 1.2
 			else:
 				clear_targets()
 
