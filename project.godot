@@ -23,6 +23,10 @@ window/size/test_height=408
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
+[gui]
+
+theme/custom_font="res://DefaultFont.tres"
+
 [layer_names]
 
 2d_physics/layer_1="stage"

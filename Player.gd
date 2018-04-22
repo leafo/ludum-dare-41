@@ -174,17 +174,12 @@ func shoot_puck():
 	# you can only shoot if it's it's near by 
 	if puck.within_range(self):
 		var targets = sorted_targets()
-		var direction = null
 
 		if targets:
-			#shoot puck to object
-			direction = (targets[0].position - puck.position).normalized()
-
+			puck.shoot_targets(targets)
 		else:
-			# shoot from body to direction
-			direction = (puck.position - position).normalized()
-
-		puck.shoot(direction)
+			var direction = (puck.position - position).normalized()
+			puck.shoot(direction)
 
 func sorted_targets():
 	if locked_on.empty():

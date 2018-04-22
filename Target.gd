@@ -26,13 +26,16 @@ func take_hit(collision, object):
 func stun():
 	if stunned:
 		return
-		
+
 	stunned = true
 	set_collision_layer_bit(4, false)
 	set_collision_layer_bit(5, true)
+	set_collision_mask_bit(2, false)
+
 	$StunTimer.start()
 
 func _on_StunTimer_timeout():
 	stunned = false
 	set_collision_layer_bit(5, false)
 	set_collision_layer_bit(4, true)
+	set_collision_mask_bit(2, true)

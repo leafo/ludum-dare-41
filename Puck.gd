@@ -8,6 +8,7 @@ const SHOOT_SPEED = 300
 var velocity = Vector2()
 
 var just_hit = false
+var remaining_targets = null
 
 var held_by = null
 
@@ -17,6 +18,11 @@ func _ready():
 	pass
 
 func _process(delta):
+	if remaining_targets:
+		$Label.text = "Targets: " + str(remaining_targets.size())
+	else:
+		$Label.text = "Targets: 0"
+
 	if held_by: 
 		var hold_position = held_by.get_hold_position()
 
@@ -52,13 +58,31 @@ func shoot(direction):
 	else:
 		$BounceAnimation.play("BounceFlip")
 
+func clear_targets():
+	remaining_targets = null
+
 # go through targets hitting them
 func shoot_targets(targets):
-	pass
+	remaining_targets = targets.duplicate()
+	shoot(pop_next_target())
+
+# returns direction to next target
+func pop_next_target():
+	if not remaining_targets:
+		return
+
+	var target = remaining_targets.pop_front()
+
+	if remaining_targets.size() == 0:
+		clear_targets()
+
+	return (target.position - position).normalized()
 
 func grab_by(obj):
 	if held_by:
 		return false
+
+	clear_targets()
 
 	held_by = obj
 	velocity = Vector2()
@@ -93,9 +117,16 @@ func check_for_hits():
 
 			if "Target" in object.get_groups():
 				object.take_hit(collision, self)
+				if remaining_targets:
+					var angle = pop_next_target()
+					$DirectionVector.rotation_degrees = angle.angle() / PI * 180
+					velocity = angle * velocity.length()
+			else:
+				clear_targets()
 
 func within_range(body):
-	return $HoldRadius.overlaps_body(body)
+	# return $HoldRadius.overlaps_body(body)
+	return true
 
 func _on_Timeout_timeout():
 	just_hit = false
