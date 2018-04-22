@@ -15,6 +15,7 @@ var skating = false
 var just_tapped = false
 var holding_object = null
 var stunned = false
+var dead = false
 
 var facing = "left"
 
@@ -39,6 +40,10 @@ func deadzone_normalize(input, min_len=0.2, max_len=0.95):
 	return input.normalized() * sc
 
 func _process(delta):
+	if dead: 
+		return
+
+
 	var have_joystick = false
 	var movement = Vector2(0,0)
 
@@ -237,21 +242,41 @@ func sort_targets(a, b):
 
 	return false
 
+func take_damage(amount):
+	health = max(0, health - 10)
+	emit_signal("health_update", health)
+
+	if health == 0:
+		dead = true
+		release_puck()
+		$DieAnimation.play("Die")
+		emit_signal("die")
+		set_collision_layer_bit(1, false)
+
+		if skating:
+			skating = false
+			$SkateSoundTimer.stop()
+
+		return true
+
 # hit by an enemy
 func take_hit(collision, object):
 	if stunned:
 		return
 
 	print("Player takes hit")
-	health = max(0, health - 10)
-	emit_signal("health_update", health)
+	take_damage(25)
+
+	if dead:
+		$SoundDie.play()
+	else:
+		$SoundHurt.play()
 
 	stunned = true
 	$StunTimer.start()
 	$CameraShake.play("Shake")
 	$HitAnimation.play("Hit")
 	velocity = (position - object.position).normalized() * 100
-
 
 func _on_SkateSoundTimer_timeout():
 	$SoundSkate.play()

@@ -66,7 +66,7 @@ shader_param/scanline_color = Color( 0.160784, 0.152941, 0.196078, 0.0777647 )
 shader_param/distort = 0.4
 _sections_unfolded = [ "shader_param" ]
 
-[node name="Main" type="Node" index="0"]
+[node name="Main" type="Node"]
 
 [node name="ComboCounter" type="Timer" parent="." index="0"]
 
@@ -149,6 +149,7 @@ polygon = PoolVector2Array( 696.076, 100.869, 725.804, 107.053, 754.106, 120.133
 
 [node name="Sprites" type="YSort" parent="." index="2"]
 
+editor/display_folded = true
 sort_enabled = true
 _sections_unfolded = [ "Sort", "Transform" ]
 __meta__ = {

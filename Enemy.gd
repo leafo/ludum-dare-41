@@ -16,6 +16,7 @@ func _process(delta):
 
 func take_hit(collision, object):
 	print("enemy taking hit")
+	$SoundHurt.play()
 	var dir = (position - object.position).normalized()
 	velocity += dir * 100
 	.take_hit(collision, object)
