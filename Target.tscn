@@ -46,7 +46,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -6 ), Vector2( 0, -6 ), Vector2( 0, -10 ), Vector2( 0, -6 ) ]
 }
 
-[node name="Target" type="KinematicBody2D" index="0" groups=[
+[node name="Target" type="KinematicBody2D" groups=[
 "Target",
 "PuckBounce",
 ]]

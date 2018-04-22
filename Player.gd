@@ -174,28 +174,25 @@ func shoot_puck():
 	# you can only shoot if it's it's near by 
 	if puck.within_range(self):
 		var target = closest_lock()
+		var direction = null
 
-		if not target:
-			target = puck # shoot to where puck is on body
+		if target:
+			#shoot puck to object
+			direction = (target.position - puck.position).normalized()
 
-		puck.shoot((target.position - position).normalized())
+		else:
+			# shoot from body to direction
+			direction = (puck.position - position).normalized()
+
+		puck.shoot(direction)
 
 func closest_lock():
 	if locked_on.empty():
 		return null
 
-	var distance = null
-	var closest = null
-
-	for target in locked_on.keys():
-		var d = (target.position - position).length_squared()
-		if (distance == null) or (d < distance):
-			distance = d
-			closest = target
-
-	return closest
-
-
+	var closest = locked_on.keys()
+	closest.sort_custom(self, "sort_targets")
+	return closest[0]
 
 func check_for_hits():
 	for i in range(get_slide_count()):
@@ -220,6 +217,18 @@ func start_skating():
 	$SkateSoundTimer.wait_time = 0.4
 	$SkateSoundTimer/Animation.play("StartSkating")
 	$SkateSoundTimer.start()
+
+# sort targets by distance to self
+func sort_targets(a, b):
+	var a_dist = (a.position - position).length_squared()
+	var b_dist = (b.position - position).length_squared()
+
+	if a_dist < b_dist:
+		return true
+
+	return false
+
+
 
 func _on_SkateSoundTimer_timeout():
 	$SoundSkate.play()
