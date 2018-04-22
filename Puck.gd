@@ -9,9 +9,7 @@ var velocity = Vector2()
 
 var just_hit = false
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+var held_by = null
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -19,6 +17,11 @@ func _ready():
 	pass
 
 func _process(delta):
+	if held_by: 
+		var target_pos = position.linear_interpolate(held_by.get_hold_position(), min(1, delta * 25))
+		move_and_slide((target_pos - position) / delta)
+		return
+
 	# decay velocity
 	if velocity.length_squared() != 0:
 		if velocity.length_squared() <= EPSILON:
@@ -40,6 +43,22 @@ func shoot(direction):
 		$BounceAnimation.play("Bounce")
 	else:
 		$BounceAnimation.play("BounceFlip")
+
+func grab_by(obj):
+	if held_by:
+		return false
+
+	held_by = obj
+	# no collision
+	set_collision_layer_bit(0, false)
+	set_collision_mask_bit(0, false)
+	return true
+	
+func release():
+	held_by = null
+
+	set_collision_layer_bit(0, true)
+	set_collision_mask_bit(0, true)
 
 func on_hit(): 
 	if not just_hit:

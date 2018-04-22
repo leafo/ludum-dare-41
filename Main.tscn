@@ -144,6 +144,9 @@ position = Vector2( 121.54, -6.40796 )
 
 [node name="Puck" parent="Sprites" index="1" instance=ExtResource( 3 )]
 
+collision_mask = 0
+_sections_unfolded = [ "Collision", "Transform", "collision" ]
+
 [node name="Target" parent="Sprites" index="2" instance=ExtResource( 4 )]
 
 editor/display_folded = false

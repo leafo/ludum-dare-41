@@ -8,10 +8,14 @@ const EPSILON = 0.00001
 var skating = false
 var just_tapped = false
 
+var facing = "left"
+
 var velocity = Vector2()
 
 func _ready():
 	pass
+
+onready var puck = get_parent().get_node("Puck")
 
 func deadzone_normalize(input, min_len=0.2, max_len=0.95):
 	var l = input.length()
@@ -51,12 +55,15 @@ func _process(delta):
 
 	if movement.x < 0:
 		$Sprite.flip_h = false
+		facing = "left"
 
 	if movement.x > 0:
 		$Sprite.flip_h = true
+		facing = "right"
 
 	if Input.is_action_just_pressed("ui_accept"):
-		shoot_puck()
+		grab_puck()
+		# shoot_puck()
 
 	if movement.length_squared() != 0:
 		movement = movement.normalized() * SPEED
@@ -96,8 +103,14 @@ func position_camera():
 	offset = offset / count
 	camera.position = offset
 
+
+func grab_puck():
+	if not puck.grab_by(self):
+		return
+
+	print("You grabbed the puck")
+
 func shoot_puck():
-	var puck = get_parent().get_node("Puck")
 	var distance = position.distance_to(puck.position)
 	if distance < 30: 
 		puck.shoot((puck.position - position).normalized())
@@ -114,6 +127,12 @@ func check_for_hits():
 				$SoundTap/Timeout.start()
 			object.push(collision.normal * -100)
 
+func get_hold_position():
+	if facing == "left":
+		return position + Vector2(-15, 0)
+	else:
+		return position + Vector2(15, 0)
+
 func start_skating():
 	skating = true
 	$SkateSoundTimer.wait_time = 0.4
@@ -123,7 +142,6 @@ func start_skating():
 func _on_SkateSoundTimer_timeout():
 	$SoundSkate.play()
 	$SkateSoundTimer.start()
-
 
 func _on_TapTimeout_timeout():
 	just_tapped = false
