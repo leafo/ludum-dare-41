@@ -7,6 +7,10 @@ const EPSILON = 0.00001
 
 onready var combo_counter = $"/root/Main/ComboCounter"
 
+signal health_update(health)
+signal die()
+
+var health = 100
 var skating = false
 var just_tapped = false
 var holding_object = null
@@ -19,7 +23,7 @@ var velocity = Vector2()
 var locked_on = {}
 
 func _ready():
-	pass
+	emit_signal("health_update", health)
 
 onready var puck = get_parent().get_node("Puck")
 
@@ -239,6 +243,9 @@ func take_hit(collision, object):
 		return
 
 	print("Player takes hit")
+	health = max(0, health - 10)
+	emit_signal("health_update", health)
+
 	stunned = true
 	$StunTimer.start()
 	$CameraShake.play("Shake")

@@ -21,12 +21,12 @@ shader = ExtResource( 3 )
 custom_solver_bias = 0.0
 extents = Vector2( 9.54917, 3.49828 )
 
-[sub_resource type="AudioStreamRandomPitch" id=7]
+[sub_resource type="AudioStreamRandomPitch" id=3]
 
 audio_stream = ExtResource( 10 )
 random_pitch = 1.2
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=4]
 
 length = 1.0
 loop = false
@@ -95,7 +95,7 @@ tracks/1/keys = {
 "values": [ 5.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=7]
 
 resource_name = "Hit"
 length = 0.2
@@ -236,7 +236,7 @@ area_mask = 1
 
 [node name="SoundSkate" type="AudioStreamPlayer2D" parent="." index="7"]
 
-stream = SubResource( 7 )
+stream = SubResource( 3 )
 volume_db = -15.0
 autoplay = false
 max_distance = 500.0
@@ -259,7 +259,7 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/StartSkating = SubResource( 8 )
+anims/StartSkating = SubResource( 4 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
 
@@ -316,7 +316,7 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/Hit = SubResource( 9 )
+anims/Hit = SubResource( 7 )
 blend_times = [  ]
 
 [node name="StunTimer" type="Timer" parent="." index="13"]
