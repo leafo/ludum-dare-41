@@ -13,6 +13,8 @@ var facing = "left"
 
 var velocity = Vector2()
 
+var locked_on = {}
+
 func _ready():
 	pass
 
@@ -56,10 +58,12 @@ func _process(delta):
 
 	if movement.x < 0:
 		$Sprite.flip_h = false
+		$LockOnArea.scale.x = 1
 		facing = "left"
 
 	if movement.x > 0:
 		$Sprite.flip_h = true
+		$LockOnArea.scale.x = -1
 		facing = "right"
 
 	if Input.is_action_just_pressed("ui_accept"):
@@ -90,14 +94,33 @@ func _process(delta):
 	move_and_slide(velocity)
 	check_for_hits()
 	position_camera()
+	find_targets()
+
+func find_targets():
+	if not holding_object:
+		if not locked_on.empty():
+			# remove the lock on
+			for target in locked_on.keys():
+				target.remove_lock_on()
+				locked_on.erase(target)
+
+		return
+
+	var bodies = $LockOnArea.get_overlapping_bodies()
+	for body in bodies:
+		if not "Target" in body.get_groups():
+			continue
+
+		if body.lock_on():
+			locked_on[body] = true
 
 func position_camera():
 	var camera = $CameraTarget
-	# see if we have any pucks in range
 
 	var offset = Vector2(0, 0)
 	var count = 1
 
+	# find all pucks in range
 	for body in $PuckCameraZone.get_overlapping_bodies():
 		if "Puck" in body.get_groups():
 			var to_puck = body.position - position

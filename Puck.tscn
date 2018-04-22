@@ -105,10 +105,10 @@ tracks/1/keys = {
 [sub_resource type="CapsuleShape2D" id=7]
 
 custom_solver_bias = 0.0
-radius = 12.1746
-height = 13.1268
+radius = 15.0
+height = 18.0
 
-[node name="Puck" type="KinematicBody2D" index="0" groups=[
+[node name="Puck" type="KinematicBody2D" groups=[
 "Puck",
 ]]
 

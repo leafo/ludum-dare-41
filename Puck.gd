@@ -90,7 +90,6 @@ func check_for_hits():
 			if "Target" in object.get_groups():
 				object.take_hit(collision, self)
 
-
 func within_range(body):
 	return $HoldRadius.overlaps_body(body)
 

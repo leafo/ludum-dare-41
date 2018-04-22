@@ -63,7 +63,7 @@ custom_solver_bias = 0.0
 radius = 52.3749
 height = 71.6971
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 2
@@ -203,6 +203,23 @@ _sections_unfolded = [ "Collision" ]
 
 rotation = 1.5708
 shape = SubResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="LockOnArea" type="Area2D" parent="." index="9"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Transform" ]
+
+[node name="Polygon" type="CollisionPolygon2D" parent="LockOnArea" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 0.3302, -0.556969, -40, 40, -80, 50, -90, 0, -80, -50, -40, -40, 0, -10 )
 _sections_unfolded = [ "Transform" ]
 
 [connection signal="timeout" from="SoundTap/Timeout" to="." method="_on_TapTimeout_timeout"]

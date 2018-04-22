@@ -1,0 +1,214 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://LockOn.gd" type="Script" id=1]
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "Throb"
+length = 1.0
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Size:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1.71937, 1.71937, 1.71937 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 0.6, 0.6 ), Vector2( 0.5, 0.5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Size:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75, 1 ),
+"transitions": PoolRealArray( -2, -2, -2, -2, -2 ),
+"update": 0,
+"values": [ 0.0, -5.0, 0.0, 5.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "Appear"
+length = 0.5
+loop = false
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.35, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 0.8, 0.8 ), Vector2( 1, 1 ) ]
+}
+
+[node name="LockOn" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Size" type="Node2D" parent="." index="0"]
+
+editor/display_folded = true
+scale = Vector2( 0.5, 0.5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Corner" type="Node2D" parent="Size" index="0"]
+
+editor/display_folded = true
+
+[node name="Outline" type="Line2D" parent="Size/Corner" index="0"]
+
+points = PoolVector2Array( 20, 10, 20, 20, 10, 20 )
+width = 8.0
+default_color = Color( 0.160784, 0.152941, 0.196078, 1 )
+texture_mode = 778987894
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+sharp_limit = 2.0
+round_precision = 8
+_sections_unfolded = [ "Capping", "Transform" ]
+
+[node name="Fill" type="Line2D" parent="Size/Corner" index="1"]
+
+points = PoolVector2Array( 20, 10, 20, 20, 10, 20 )
+width = 4.0
+default_color = Color( 0.945098, 0.945098, 0.917647, 1 )
+texture_mode = 778987894
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+sharp_limit = 2.0
+round_precision = 8
+_sections_unfolded = [ "Capping", "Fill", "Transform" ]
+
+[node name="Corner2" type="Node2D" parent="Size" index="1"]
+
+editor/display_folded = true
+rotation = 1.5708
+_sections_unfolded = [ "Transform" ]
+
+[node name="Outline" type="Line2D" parent="Size/Corner2" index="0"]
+
+points = PoolVector2Array( 20, 10, 20, 20, 10, 20 )
+width = 8.0
+default_color = Color( 0.160784, 0.152941, 0.196078, 1 )
+texture_mode = 778987894
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+sharp_limit = 2.0
+round_precision = 8
+_sections_unfolded = [ "Capping", "Transform" ]
+
+[node name="Fill" type="Line2D" parent="Size/Corner2" index="1"]
+
+points = PoolVector2Array( 20, 10, 20, 20, 10, 20 )
+width = 4.0
+default_color = Color( 0.945098, 0.945098, 0.917647, 1 )
+texture_mode = 778987894
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+sharp_limit = 2.0
+round_precision = 8
+_sections_unfolded = [ "Capping", "Fill", "Transform" ]
+
+[node name="Corner3" type="Node2D" parent="Size" index="2"]
+
+editor/display_folded = true
+rotation = -3.14159
+_sections_unfolded = [ "Transform" ]
+
+[node name="Outline" type="Line2D" parent="Size/Corner3" index="0"]
+
+points = PoolVector2Array( 20, 10, 20, 20, 10, 20 )
+width = 8.0
+default_color = Color( 0.160784, 0.152941, 0.196078, 1 )
+texture_mode = 778987894
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+sharp_limit = 2.0
+round_precision = 8
+_sections_unfolded = [ "Capping", "Transform" ]
+
+[node name="Fill" type="Line2D" parent="Size/Corner3" index="1"]
+
+points = PoolVector2Array( 20, 10, 20, 20, 10, 20 )
+width = 4.0
+default_color = Color( 0.945098, 0.945098, 0.917647, 1 )
+texture_mode = 778987894
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+sharp_limit = 2.0
+round_precision = 8
+_sections_unfolded = [ "Capping", "Fill", "Transform" ]
+
+[node name="Corner4" type="Node2D" parent="Size" index="3"]
+
+editor/display_folded = true
+rotation = -1.5708
+_sections_unfolded = [ "Transform" ]
+
+[node name="Outline" type="Line2D" parent="Size/Corner4" index="0"]
+
+points = PoolVector2Array( 20, 10, 20, 20, 10, 20 )
+width = 8.0
+default_color = Color( 0.160784, 0.152941, 0.196078, 1 )
+texture_mode = 778987894
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+sharp_limit = 2.0
+round_precision = 8
+_sections_unfolded = [ "Capping", "Transform" ]
+
+[node name="Fill" type="Line2D" parent="Size/Corner4" index="1"]
+
+points = PoolVector2Array( 20, 10, 20, 20, 10, 20 )
+width = 4.0
+default_color = Color( 0.945098, 0.945098, 0.917647, 1 )
+texture_mode = 778987894
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+sharp_limit = 2.0
+round_precision = 8
+_sections_unfolded = [ "Capping", "Fill", "Transform" ]
+
+[node name="ThrobAnimation" type="AnimationPlayer" parent="." index="1"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Throb = SubResource( 1 )
+blend_times = [  ]
+_sections_unfolded = [ "Playback Options" ]
+
+[node name="AppearAnimation" type="AnimationPlayer" parent="." index="2"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Appear = SubResource( 2 )
+blend_times = [  ]
+_sections_unfolded = [ "Playback Options" ]
+
+
