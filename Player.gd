@@ -7,6 +7,7 @@ const EPSILON = 0.00001
 
 var skating = false
 var just_tapped = false
+var holding_object = null
 
 var facing = "left"
 
@@ -62,8 +63,12 @@ func _process(delta):
 		facing = "right"
 
 	if Input.is_action_just_pressed("ui_accept"):
-		grab_puck()
-		# shoot_puck()
+		if holding_object:
+			holding_object.release()
+			holding_object = null
+			shoot_puck()
+		else:
+			grab_puck()
 
 	if movement.length_squared() != 0:
 		movement = movement.normalized() * SPEED
@@ -105,10 +110,14 @@ func position_camera():
 
 
 func grab_puck():
-	if not puck.grab_by(self):
+	if holding_object:
 		return
 
-	print("You grabbed the puck")
+	if not puck.grab_by(self):
+		return
+	
+	$SoundPickup.play()
+	holding_object = puck
 
 func shoot_puck():
 	var distance = position.distance_to(puck.position)

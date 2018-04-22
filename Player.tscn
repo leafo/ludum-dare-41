@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Shadow.tscn" type="PackedScene" id=2]
@@ -6,7 +6,8 @@
 [ext_resource path="res://images/sprite.png" type="Texture" id=4]
 [ext_resource path="res://Circle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sounds/tap.wav" type="AudioStream" id=6]
-[ext_resource path="res://sounds/skate.wav" type="AudioStream" id=7]
+[ext_resource path="res://sounds/pickup.wav" type="AudioStream" id=7]
+[ext_resource path="res://sounds/skate.wav" type="AudioStream" id=8]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -17,6 +18,11 @@ shader = ExtResource( 3 )
 
 custom_solver_bias = 0.0
 extents = Vector2( 9.54917, 3.49828 )
+
+[sub_resource type="AudioStreamRandomPitch" id=5]
+
+audio_stream = ExtResource( 8 )
+random_pitch = 1.2
 
 [sub_resource type="Animation" id=3]
 
@@ -60,11 +66,11 @@ height = 71.6971
 [node name="Player" type="KinematicBody2D"]
 
 input_pickable = false
-collision_layer = 1
-collision_mask = 1
+collision_layer = 2
+collision_mask = 5
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 __meta__ = {
 "_edit_group_": true
 }
@@ -126,6 +132,7 @@ visible = false
 
 [node name="SoundTap" type="AudioStreamPlayer2D" parent="." index="4"]
 
+editor/display_folded = true
 stream = ExtResource( 6 )
 volume_db = -5.0
 autoplay = false
@@ -141,9 +148,19 @@ wait_time = 0.1
 one_shot = true
 autostart = false
 
-[node name="SoundSkate" type="AudioStreamPlayer2D" parent="." index="5"]
+[node name="SoundPickup" type="AudioStreamPlayer2D" parent="." index="5"]
 
 stream = ExtResource( 7 )
+volume_db = -10.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="SoundSkate" type="AudioStreamPlayer2D" parent="." index="6"]
+
+stream = SubResource( 5 )
 volume_db = -15.0
 autoplay = false
 max_distance = 500.0
@@ -151,7 +168,7 @@ attenuation = 1.0
 bus = "Master"
 area_mask = 1
 
-[node name="SkateSoundTimer" type="Timer" parent="." index="6"]
+[node name="SkateSoundTimer" type="Timer" parent="." index="7"]
 
 editor/display_folded = true
 process_mode = 1
@@ -170,7 +187,7 @@ anims/StartSkating = SubResource( 3 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
 
-[node name="PuckCameraZone" type="Area2D" parent="." index="7"]
+[node name="PuckCameraZone" type="Area2D" parent="." index="8"]
 
 editor/display_folded = true
 input_pickable = true

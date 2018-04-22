@@ -86,11 +86,12 @@ editor/display_folded = true
 position = Vector2( -147.747, -83.8396 )
 input_pickable = false
 collision_layer = 1
-collision_mask = 1
+collision_mask = 15
 constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
+_sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Rink/RinkBody" index="0"]
 
@@ -134,34 +135,38 @@ polygon = PoolVector2Array( 696.076, 100.869, 725.804, 107.053, 754.106, 120.133
 
 [node name="Sprites" type="YSort" parent="." index="1"]
 
-position = Vector2( 49.4952, 58.7185 )
 sort_enabled = true
-_sections_unfolded = [ "Sort" ]
+_sections_unfolded = [ "Sort", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Player" parent="Sprites" index="0" instance=ExtResource( 2 )]
 
-position = Vector2( 121.54, -6.40796 )
+position = Vector2( 170.713, 123.819 )
 
 [node name="Puck" parent="Sprites" index="1" instance=ExtResource( 3 )]
 
+position = Vector2( 132.928, 119.96 )
 collision_mask = 0
 _sections_unfolded = [ "Collision", "Transform", "collision" ]
 
 [node name="Target" parent="Sprites" index="2" instance=ExtResource( 4 )]
 
 editor/display_folded = false
+position = Vector2( 97.7346, 50.3524 )
 
 [node name="Target2" parent="Sprites" index="3" instance=ExtResource( 4 )]
 
-position = Vector2( 47.6501, 13.469 )
+position = Vector2( 78.4506, 89.1193 )
 
 [node name="Target3" parent="Sprites" index="4" instance=ExtResource( 4 )]
 
-position = Vector2( 47.6501, 75.1388 )
+position = Vector2( 78.4506, 150.789 )
 
 [node name="Target4" parent="Sprites" index="5" instance=ExtResource( 4 )]
 
-position = Vector2( 65.0135, 120.044 )
+position = Vector2( 95.814, 195.694 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
 

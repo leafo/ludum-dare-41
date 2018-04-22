@@ -49,16 +49,17 @@ func grab_by(obj):
 		return false
 
 	held_by = obj
-	# no collision
-	set_collision_layer_bit(0, false)
-	set_collision_mask_bit(0, false)
+	velocity = Vector2()
+
+	# move the layer to held puck
+	set_collision_layer_bit(2, false)
+	set_collision_layer_bit(3, true)
 	return true
 	
 func release():
 	held_by = null
-
-	set_collision_layer_bit(0, true)
-	set_collision_mask_bit(0, true)
+	set_collision_layer_bit(3, false)
+	set_collision_layer_bit(2, true)
 
 func on_hit(): 
 	if not just_hit:
