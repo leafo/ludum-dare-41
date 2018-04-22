@@ -3,7 +3,7 @@ extends KinematicBody2D
 const MAX_SPEED = 200
 const FRICTION = 1.5
 const EPSILON = 0.00001
-const SHOOT_SPEED = 300
+const SHOOT_SPEED = 500
 
 var velocity = Vector2()
 

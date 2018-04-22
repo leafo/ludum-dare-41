@@ -4,7 +4,7 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Puck.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Target.tscn" type="PackedScene" id=4]
-[ext_resource path="res://fonts/HelvetiPixel.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://fonts/Born2bSportyV2.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://FPS.gd" type="Script" id=6]
 [ext_resource path="res://ScreenShader.gd" type="Script" id=7]
 
@@ -69,7 +69,7 @@ shader_param/scanline_color = Color( 0.160784, 0.152941, 0.196078, 0.0777647 )
 shader_param/distort = 0.4
 _sections_unfolded = [ "shader_param" ]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" index="0"]
 
 [node name="Rink" type="Sprite" parent="." index="0"]
 
@@ -152,6 +152,14 @@ editor/display_folded = false
 
 position = Vector2( 47.6501, 13.469 )
 
+[node name="Target3" parent="Sprites" index="4" instance=ExtResource( 4 )]
+
+position = Vector2( 47.6501, 75.1388 )
+
+[node name="Target4" parent="Sprites" index="5" instance=ExtResource( 4 )]
+
+position = Vector2( 65.0135, 120.044 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
 
 layer = 1
@@ -177,14 +185,15 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0.92549, 0.835294, 0.427451, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.160784, 0.152941, 0.196078, 1 )
+custom_constants/shadow_as_outline = 1
 text = "FPS:"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 script = ExtResource( 6 )
-_sections_unfolded = [ "Theme", "custom_colors", "custom_fonts", "custom_styles" ]
+_sections_unfolded = [ "Theme", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
 
 [node name="ScreenShader" type="ColorRect" parent="CanvasLayer" index="1"]
 
