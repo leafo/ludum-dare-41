@@ -1,0 +1,69 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ScreenShader.gd" type="Script" id=1]
+
+[sub_resource type="Shader" id=3]
+
+code = "shader_type canvas_item;
+
+uniform float epsilon : hint_range(0, 0.005); // = 0.005;
+uniform vec4 scanline_color : hint_color;
+uniform float distort : hint_range(-1,1);
+
+float cubic_bez(float p0, float p1, float p2, float p3, float t) {
+	float nt = (1.0 - t);
+	float nt2 = nt * nt;
+	float nt3 = nt2 *  nt;
+	float t2 = t * t;
+	float t3 = t2 * t;
+	return (nt3 * p0) + (3.0 * nt2 * t * p1) + (3.0 * nt * t2 * p2) + (t3 * p3);
+}
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	uv.x = cubic_bez(0, 0.0 + distort, 1.0 - distort, 1, uv.x);
+	uv.y = cubic_bez(0, 0.0 + distort, 1.0 - distort, 1, uv.y);
+	float r = textureLod(SCREEN_TEXTURE, uv + vec2(epsilon, epsilon), 0.0).r;
+	float g = textureLod(SCREEN_TEXTURE, uv + vec2(0.0, -epsilon), 0.0).g;
+	float b = textureLod(SCREEN_TEXTURE, uv + vec2(-epsilon, 0.0), 0.0).b;
+	
+	vec3 out_color = vec3(r,g,b);
+
+	if (int(FRAGCOORD.y) % 2 == 0) {
+		out_color = mix(out_color, scanline_color.rgb, scanline_color.a);
+	}
+	
+	COLOR.rgb = out_color;
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+
+render_priority = 0
+shader = SubResource( 3 )
+shader_param/epsilon = 0.001
+shader_param/scanline_color = Color( 0.160784, 0.152941, 0.196078, 0.0777647 )
+shader_param/distort = 0.4
+_sections_unfolded = [ "shader_param" ]
+
+[node name="ScreenShader" type="ColorRect"]
+
+visible = false
+material = SubResource( 4 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Material" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+

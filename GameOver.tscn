@@ -131,7 +131,7 @@ _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Size Flags" ]
 [node name="AppearAnimation" type="AnimationPlayer" parent="." index="1"]
 
 root_node = NodePath("..")
-autoplay = ""
+autoplay = "Appear"
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
@@ -181,8 +181,6 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 140.0
 margin_bottom = 16.0
-rect_rotation = 0.0257874
-rect_scale = Vector2( 1.00865, 1.00865 )
 rect_pivot_offset = Vector2( 54, 8 )
 rect_clip_content = false
 mouse_filter = 2
@@ -202,7 +200,7 @@ _sections_unfolded = [ "Focus", "Material", "Mouse", "Rect", "Visibility", "cust
 [node name="ThrobAnimation" type="AnimationPlayer" parent="CenterContainer/VBoxContainer/Title" index="0"]
 
 root_node = NodePath("..")
-autoplay = ""
+autoplay = "Throb"
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 0.8

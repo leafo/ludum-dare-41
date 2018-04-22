@@ -4,16 +4,15 @@ export var score = 99 setget set_score
 
 var animating = true
 
+var TitleScreen = preload("res://TitleScreen.tscn")
+
 func _process(delta):
 	if animating:
 		return true
 	
 	if Input.is_action_just_pressed("ui_accept"):
-		print("go back to title screen")
-
-func _ready():
-	$AppearAnimation.play("Appear")
-	find_node("ThrobAnimation").play("Throb")
+		print("changing to title screen")
+		get_tree().change_scene_to(TitleScreen)
 
 func set_score(s):
 	score = s
