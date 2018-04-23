@@ -30,6 +30,7 @@ _sections_unfolded = [ "Collision", "Transform", "collision" ]
 __meta__ = {
 "_edit_group_": true
 }
+damage_speed = 85
 
 [node name="Shadow" parent="." index="0" instance=ExtResource( 2 )]
 

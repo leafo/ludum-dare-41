@@ -114,7 +114,6 @@ func check_for_hits():
 		var object = collision.collider
 
 		if "PuckBounce" in object.get_groups():
-			print("Boucning!")
 			velocity = (-velocity).reflect(collision.normal)
 			on_hit()
 
