@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://ComboCounter.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://images/bar_fill.png" type="Texture" id=11]
 [ext_resource path="res://HealthBar.gd" type="Script" id=12]
 [ext_resource path="res://ScreenShader.tscn" type="PackedScene" id=13]
+[ext_resource path="res://sounds/16.ogg" type="AudioStream" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -24,7 +25,7 @@ extents = Vector2( 278.022, 10 )
 custom_solver_bias = 0.0
 extents = Vector2( 15.7499, 88.4821 )
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
@@ -52,7 +53,6 @@ __meta__ = {
 "PuckBounce",
 ]]
 
-editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 15
@@ -129,27 +129,22 @@ _sections_unfolded = [ "Collision", "Transform", "collision" ]
 [node name="Target" parent="Sprites" index="2" instance=ExtResource( 6 )]
 
 position = Vector2( 97.7346, 50.3524 )
-damage_speed = 85
 
 [node name="Target5" parent="Sprites" index="3" instance=ExtResource( 6 )]
 
 position = Vector2( 129.512, 159.983 )
-damage_speed = 85
 
 [node name="Target2" parent="Sprites" index="4" instance=ExtResource( 6 )]
 
 position = Vector2( 78.4506, 89.1193 )
-damage_speed = 85
 
 [node name="Target3" parent="Sprites" index="5" instance=ExtResource( 6 )]
 
 position = Vector2( 78.4506, 150.789 )
-damage_speed = 85
 
 [node name="Target4" parent="Sprites" index="6" instance=ExtResource( 6 )]
 
 position = Vector2( 95.814, 195.694 )
-damage_speed = 85
 
 [node name="Enemy" parent="Sprites" index="7" instance=ExtResource( 7 )]
 
@@ -158,6 +153,7 @@ damage_speed = 85
 
 [node name="UILayer" type="CanvasLayer" parent="." index="3"]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -323,6 +319,14 @@ playback/speed = 1.0
 _sections_unfolded = [ "playback" ]
 
 [node name="ScreenShader" parent="UILayer" index="1" instance=ExtResource( 13 )]
+
+[node name="Music" type="AudioStreamPlayer" parent="." index="4"]
+
+stream = ExtResource( 14 )
+volume_db = 0.0
+autoplay = true
+mix_target = 0
+bus = "Master"
 
 [connection signal="combo_updated" from="ComboCounter" to="UILayer/UI/UIHeader/Combo" method="_on_ComboCounter_combo_updated"]
 

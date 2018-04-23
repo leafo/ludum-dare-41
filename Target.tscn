@@ -16,7 +16,7 @@ shader = ExtResource( 3 )
 custom_solver_bias = 0.0
 extents = Vector2( 6.20995, 4.19762 )
 
-[node name="Target" type="KinematicBody2D" groups=[
+[node name="Target" type="KinematicBody2D" index="0" groups=[
 "Target",
 "PuckBounce",
 ]]

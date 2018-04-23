@@ -52,7 +52,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 0.8, 0.8 ), Vector2( 1, 1 ) ]
 }
 
-[node name="LockOn" type="Node2D" index="0"]
+[node name="LockOn" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
