@@ -48,3 +48,14 @@ func take_hit(collision, object):
 
 func _on_DieAnimation_animation_finished(anim_name):
 	queue_free()
+
+
+func _on_ActionTimer_timeout():
+	# see if they can shoot at player
+	var bodies = $ShootRange.get_overlapping_bodies()
+	for body in bodies:
+		if not "Player" in body.get_groups():
+			continue
+			
+		print("Player in range", body)
+	

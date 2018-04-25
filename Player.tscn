@@ -23,17 +23,17 @@ shader = ExtResource( 3 )
 custom_solver_bias = 0.0
 extents = Vector2( 9.54917, 3.49828 )
 
-[sub_resource type="AudioStreamRandomPitch" id=9]
+[sub_resource type="AudioStreamRandomPitch" id=3]
 
 audio_stream = ExtResource( 11 )
 random_pitch = 1.4
 
-[sub_resource type="AudioStreamRandomPitch" id=3]
+[sub_resource type="AudioStreamRandomPitch" id=4]
 
 audio_stream = ExtResource( 12 )
 random_pitch = 1.2
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 
 length = 1.0
 loop = false
@@ -65,15 +65,14 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="CapsuleShape2D" id=5]
+[sub_resource type="CapsuleShape2D" id=6]
 
 custom_solver_bias = 0.0
 radius = 52.3749
 height = 71.6971
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 
-resource_name = "Shake"
 length = 0.5
 loop = false
 step = 0.1
@@ -102,7 +101,7 @@ tracks/1/keys = {
 "values": [ 5.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=8]
 
 resource_name = "Die"
 length = 0.5
@@ -157,9 +156,8 @@ tracks/3/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.6, 0.6 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 
-resource_name = "Hit"
 length = 0.2
 loop = false
 step = 0.05
@@ -188,7 +186,9 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.3, 1 ), Vector2( 1, 1 ) ]
 }
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
 
 input_pickable = false
 collision_layer = 2
@@ -308,7 +308,7 @@ area_mask = 1
 
 [node name="SoundHurt" type="AudioStreamPlayer2D" parent="." index="8"]
 
-stream = SubResource( 9 )
+stream = SubResource( 3 )
 volume_db = 0.0
 autoplay = false
 max_distance = 2000.0
@@ -318,7 +318,7 @@ area_mask = 1
 
 [node name="SoundSkate" type="AudioStreamPlayer2D" parent="." index="9"]
 
-stream = SubResource( 3 )
+stream = SubResource( 4 )
 volume_db = -15.0
 autoplay = false
 max_distance = 500.0
@@ -341,7 +341,7 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/StartSkating = SubResource( 4 )
+anims/StartSkating = SubResource( 5 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
 
@@ -360,7 +360,7 @@ _sections_unfolded = [ "Collision" ]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PuckCameraZone" index="0"]
 
 rotation = 1.5708
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="LockOnArea" type="Area2D" parent="." index="12"]
@@ -388,7 +388,7 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/Shake = SubResource( 6 )
+anims/Shake = SubResource( 7 )
 blend_times = [  ]
 
 [node name="DieAnimation" type="AnimationPlayer" parent="." index="14"]
@@ -398,7 +398,7 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/Die = SubResource( 10 )
+anims/Die = SubResource( 8 )
 blend_times = [  ]
 
 [node name="HitAnimation" type="AnimationPlayer" parent="." index="15"]
@@ -408,7 +408,7 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/Hit = SubResource( 7 )
+anims/Hit = SubResource( 9 )
 blend_times = [  ]
 
 [node name="StunTimer" type="Timer" parent="." index="16"]

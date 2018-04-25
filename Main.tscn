@@ -25,7 +25,7 @@ extents = Vector2( 278.022, 10 )
 custom_solver_bias = 0.0
 extents = Vector2( 15.7499, 88.4821 )
 
-[node name="Main" type="Node" index="0"]
+[node name="Main" type="Node"]
 
 script = ExtResource( 1 )
 
@@ -49,8 +49,8 @@ __meta__ = {
 }
 
 [node name="RinkBody" type="StaticBody2D" parent="Rink" index="0" groups=[
-"Rink",
 "PuckBounce",
+"Rink",
 ]]
 
 input_pickable = false
